@@ -1,0 +1,273 @@
+/* CSS RESET */
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline
+}
+
+article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+    display: block
+}
+
+body {
+    line-height: 1
+}
+
+ol, ul {
+    list-style: none
+}
+
+blockquote, q {
+    quotes: none
+}
+
+blockquote:before, blockquote:after, q:before, q:after {
+    content: '';
+    content: none
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0
+}
+
+*, *:before, *:after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+/* FONTS */
+
+@font-face {
+    font-family: 'Circular';
+    font-style: normal;
+    font-weight: 300;
+    src: url('/static/fonts/Circular_Air-Light.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Circular';
+    font-style: normal;
+    font-weight: 400;
+    src: url('/static/fonts/Circular_Air-Book.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Circular';
+    font-style: normal;
+    font-weight: 500;
+    src: url('/static/fonts/Circular_Air-Bold.woff2') format('woff2');
+}
+
+/* ICONS */
+
+.material-icons {
+    vertical-align: middle;
+}
+
+.md-18 {
+    font-size: 18px;
+}
+
+/* MAIN */
+
+html, body {
+    font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', sans-serif;
+    font-size: 1em;
+    font-weight: 400;
+    background: #12181F;
+    color: #FFF;
+    line-height: 1.5;
+    height: 100%;
+}
+
+body.light {
+    background: #FFF;
+    color: rgba(16, 16, 16, 0.7);
+}
+
+strong {
+    font-weight: 500;
+}
+
+.flexbox {
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+}
+
+/* APP BAR */
+
+#intro {
+    -webkit-align-items: center;
+    align-items: center;
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12);
+    position: relative;
+    z-index: 1;
+}
+
+#intro .logo {
+    margin-right: 1em;
+    padding: 0.750em 1em;
+    /*color: #fff;*/
+    background: rgba(0, 0, 0, 0.25);
+}
+
+#intro .logo.light {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+#intro h1 {
+    -webkit-align-items: center;
+    align-items: center;
+}
+
+#intro .logo h1 .material-icons {
+    margin-right: 2px;
+}
+
+#intro .description {
+    color: rgba(255, 255, 255, 0.88);
+    font-size: 0.875em;
+}
+
+#intro .description.light {
+    color: rgba(16, 16, 16, 0.58);
+}
+
+/* UI */
+
+.ui-dark, .ui-light {
+    background: #1C2A3C;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .05), 0 2px 10px -1px rgba(0, 0, 0, .15), 0 1px 2px 0 rgba(0, 0, 0, .22);
+    border-radius: 3px;
+}
+
+.ui-light {
+    background: #FFF;
+    color: rgba(16, 16, 16, 0.7);
+}
+
+.dark-border {
+    border-top: 1px solid #111820;
+}
+
+.light-border {
+    border-top: 1px solid rgba(16, 16, 16, 0.1);
+}
+
+#overlay {
+    background: rgba(0, 0, 0, 0.7);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+    z-index: 2;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+}
+
+#overlay.light {
+    background: rgba(255, 255, 255, 0.7);
+}
+
+.modal {
+    height: 300px;
+    width: 300px;
+    box-shadow: 0 11px 15px -7px rgba(0, 0, 0, .2), 0 24px 38px 3px rgba(0, 0, 0, .14), 0 9px 46px 8px rgba(0, 0, 0, .12);
+}
+
+/* MAP */
+
+#map-container {
+    width: 100%;
+    height: calc(100% - 48px);
+    position: relative;
+}
+
+#map {
+    background: #151E29;
+    width: 100%;
+    height: 100%;
+}
+
+#map .gm-style-cc {
+    display: none;
+}
+
+#map-controls {
+    position: absolute;
+    left: 12px;
+    top: 12px;
+    padding: 0.750em 0;
+    width: auto;
+}
+
+#map-controls select {
+    font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', sans-serif;
+    font-size: 1em;
+    color: #FFF;
+    text-transform: uppercase;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    border: 0;
+    padding: 0 1.25em 0 0;
+    background: transparent;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 0;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+#map-controls select:hover {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    transition: all 0.3s;
+}
+
+#map-controls select::-ms-expand {
+    display: none;
+}
+
+#map-controls select.light {
+    color: rgba(16, 16, 16, 0.7);
+    border-bottom: 1px solid rgba(16, 16, 16, 0.25);
+}
+
+#map-controls .custom-select {
+    position: relative;
+    font-size: 0.750em;
+    margin: 0 1em;
+}
+
+#map-controls .custom-select .label {
+    margin-right: 12px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+#map-controls .custom-select .label.light {
+    color: rgba(16, 16, 16, 0.5);
+}
+
+#map-controls .custom-select .arrow {
+    position: absolute;
+    right: -4px;
+    top: -1px;
+    pointer-events: none;
+}
+
+.map-control {
+    cursor: pointer;
+    text-align: center;
+}
