@@ -207,12 +207,19 @@ strong {
     display: none;
 }
 
+#map a[title='Click to see this area on Google Maps'] {
+    pointer-events: none;
+    cursor: default;
+}
+
 #map-controls {
     position: absolute;
     left: 12px;
     top: 12px;
     padding: 0.750em 0;
     width: auto;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
 }
 
 #map-controls select {
@@ -273,6 +280,19 @@ strong {
     text-align: center;
 }
 
+#lat-lng {
+    font-size: 0.750em;
+    padding: 0.750em;
+    width: 160px;
+    position: absolute;
+    bottom: -40px;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    text-align: center;
+    transition: bottom 0.2s;
+}
+
 /* ANIMATION */
 
 @keyframes fadeInUp {
@@ -288,4 +308,12 @@ strong {
 
 .fadeInUp {
     animation-name: fadeInUp;
+}
+
+/* RESPONSIVE STUFF */
+
+@media screen and (max-width: 37.5em) {
+    #map-controls {
+        width: calc(100% - 24px);
+    }
 }

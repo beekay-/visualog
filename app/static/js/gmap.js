@@ -32,6 +32,14 @@ function initMap() {
     // Set Map
     map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
+    // Remove Google link so user doesn't get redirected
+    google.maps.event.addListener(map, 'idle', function() {
+        $('a[title="Click to see this area on Google Maps"]').attr('href', '#');
+        $('a[title="Click to see this area on Google Maps"]').click(function(e) {
+            e.preventDefault();
+        });
+    });
+
     // Set Zoom Control
     var zoomControlDiv = document.createElement('div');
     var zoomControlButton = new zoomControl(zoomControlDiv, map);
@@ -49,6 +57,18 @@ function initMap() {
     var projectInfoControlButton = new projectInfoControl(projectInfoControlDiv, map);
     projectInfoControlDiv.index = 1;
     map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(projectInfoControlDiv);
+
+    // Show coordinates on right click
+    google.maps.event.addListener(map, 'rightclick', function(e){
+        var lat = e.latLng.lat().toFixed(6);
+        var lng = e.latLng.lng().toFixed(6);
+        var latLng = document.getElementById('lat-lng');
+        latLng.style.bottom = 12 + 'px';
+        latLng.innerHTML = lat + ', ' + lng;
+        setTimeout(function() {
+            latLng.style.bottom = -40 + 'px';
+        }, 3500)
+    });
 }
 
 /** ZOOM CONTROLS
