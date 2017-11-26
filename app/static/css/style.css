@@ -116,6 +116,10 @@ strong {
     transition: top 0.2s;
 }
 
+#header.light {
+    background: #FFF;
+}
+
 #header.hide {
     top: -120px;
     transition: top 0.2s;
