@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}moves.husk.org. days.{% endblock %}
+{% block head %}
+  <link href="/static/collected.css" media="screen" type="text/css" rel="stylesheet" />
+{% endblock %}
+{% block style %}
+    h1 { background-image: url(/static/whitebg50pc.png); padding: 10px; opacity: 1; display: inline; position: relative; left: -10px; }
+    h2 { padding: 10px 0px; }
+    td.summary { width: 40em; }
+{% endblock %}
+{% block content %}
+  <div id="content">
+
+    <p>Hi. You've been using Moves for {{ days }} days. (Click on a date to see a map.)</p>
+
+    <h2>Recently</h2>
+
+    <table>{% for day in summary %}
+        <tr>
+            <td><a href="/map/{{ day.dateObj.strftime('%Y-%m-%d') }}" class="big"
+                   title="Map for {{ day.dateObj.strftime('%A') }}, {{ day.dateObj.strftime('%e %B') }}">{{ day.dateObj.strftime('%e %B %Y') }}</a></td>
+            <td class="summary">{{ day.summary.walking }}{% if day.summary.run %}; {{ day.summary.run }}{% endif %}{% if day.summary.car %}; {{ day.summary.car }}{% endif %} {% if day.summary.train %}; {{ day.summary.train }}{% endif %}</td>
+            <td><a href="/geojson/{{ day.dateObj.strftime('%Y-%m-%d') }}" title="Download 'moves-{{ day.dateObj.strftime('%Y-%m-%d') }}.geojson'">GeoJSON</a></li></td>
+    {% endfor %}</table>
+
+    <h2>Months</h2>
+
+    <p>{% for month in months %}
+        <a href="/list/{{ month.strftime('%Y-%m') }}" class="big">{{ month.strftime('%B %Y') }}</a><br>
+    {% endfor %}</ul>
+
+  </div>
+{% endblock %}
