@@ -13,16 +13,13 @@
 <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
-    <div id="intro" class="flexbox">
+    <div id="header" class="flexbox">
         <div class="logo">
             <h1 class="flexbox"><i class="material-icons md-18">pin_drop</i><strong>Visualog</strong></h1>
         </div>
         <div class="description">
             <h1>A visual journey of 2017</h1>
         </div>
-    </div>
-    <div id="map-container">
-        <div id="map"></div>
         <div id="map-controls" class="flexbox ui-dark">
             <div class="custom-select">
                 <span class="label">City</span>
@@ -45,9 +42,12 @@
                 <span class="arrow"><i class="material-icons md-18">keyboard_arrow_down</i></span>
             </div>
         </div>
-        <div id="lat-lng" class="ui-dark"></div>
     </div>
-<script src="https://maps.googleapis.com/maps/api/js?libraries=places&amp;key=AIzaSyCivLBv9EE4ATMSsf2HYdDCFc97opYPSUw"></script>
+    <div id="map-container">
+        <div id="map"></div>
+    </div>
+    <div id="lat-lng" class="ui-dark"></div>
+<script src="https://maps.googleapis.com/maps/api/js?libraries=places&amp;key=AIzaSyCivLBv9EE4ATMSsf2HYdDCFc97opYPSUw&amp;use_slippy=true"></script>
 <script src="/static/js/vendor/jquery.js"></script>
 <script src="/static/js/gmap.js"></script>
 <script>window.onload = function() { initMap(); };</script>
