@@ -4,6 +4,7 @@ var calgary = new google.maps.LatLng(51.044875, -114.069355);
 var toronto = new google.maps.LatLng(43.653252, -79.383934);
 var overlay = document.createElement('div');
 var modal = document.createElement('div');
+var contrastButton = document.createElement('div');
 var map;
 
 function initMap() {
@@ -38,10 +39,10 @@ function initMap() {
     map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(zoomControlDiv);
 
     // Set Brightness Control
-    var brightnessControlDiv = document.createElement('div');
-    var brightnessControlButton = new brightnessControl(brightnessControlDiv, map);
-    brightnessControlDiv.index = 1;
-    map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(brightnessControlDiv);
+    var contrastControlDiv = document.createElement('div');
+    var contrastControlButton = new contrastControl(contrastControlDiv, map);
+    contrastControlDiv.index = 1;
+    map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(contrastControlDiv);
 
     // Set Project Info Control
     var projectInfoControlDiv = document.createElement('div');
@@ -84,24 +85,23 @@ function zoomControl(controlDiv, map) {
 /** CONTRAST CONTROL
  * Custom UI control for handling map contrast.
  **/
-function brightnessControl(controlDiv, map) {
+function contrastControl(controlDiv, map) {
     controlDiv.style.padding = '12px';
     var controlWrapper = document.createElement('div');
-    controlWrapper.id = 'brightness-control';
+    controlWrapper.id = 'contrast-control';
     controlWrapper.classList = 'ui-dark map-control';
     controlDiv.appendChild(controlWrapper);
     // Contrast Button
-    var contrastButton = document.createElement('div');
     contrastButton.style.padding = '4px';
     contrastButton.innerHTML = '<i class="material-icons">brightness_4</i>';
     controlWrapper.appendChild(contrastButton);
     // Contrast Button Functionality
     google.maps.event.addDomListener(contrastButton, 'click', function() {
-        console.log('changed to ui-light');
-        map.setOptions({ backgroundColor: '#F5F5F5', styles: lightStyle });
-        $('body, #intro > .logo, #intro > .description, #map-controls > .custom-select > select, #map-controls > .custom-select > .label').addClass('light');
-        $('#map-controls, #zoom-control, #brightness-control, #project-info-control').removeClass('ui-dark').addClass('ui-light');
-        $('.dark-border').removeClass('dark-border').addClass('light-border');
+        if (!$('body').hasClass('light')) {
+            addLightTheme();
+        } else {
+            addDarkTheme();
+        }
         // ga("send", "event", "Zoomed Out", "Clicks");
     });
 }
@@ -127,11 +127,11 @@ function projectInfoControl(controlDiv, map) {
         // Check to see to see active theme is light
         if ($('body').hasClass('light')) {
             // If so change the theme of modal as well
-            modal.classList = 'modal ui-light';
+            modal.classList = 'modal ui-light animated fadeInUp';
             overlay.classList = 'flexbox light';
         } else {
             // Else keep it dark
-            modal.classList = 'modal ui-dark';
+            modal.classList = 'modal ui-dark animated fadeInUp';
         }
         document.body.appendChild(overlay);
         overlay.appendChild(modal);
@@ -146,4 +146,26 @@ function projectInfoControl(controlDiv, map) {
     modal.onclick = function(e) {
         e.stopPropagation();
     };
+}
+
+/** ADD LIGHT THEME
+ * Change app components to show light theme.
+ **/
+function addLightTheme() {
+    contrastButton.innerHTML = '<i class="material-icons">brightness_5</i>';
+    map.setOptions({ backgroundColor: '#F5F5F5', styles: lightStyle });
+    $('body, #intro > .logo, #intro > .description, #map-controls > .custom-select > select, #map-controls > .custom-select > .label').addClass('light');
+    $('#map-controls, #zoom-control, #contrast-control, #project-info-control').removeClass('ui-dark').addClass('ui-light');
+    $('.dark-border').removeClass('dark-border').addClass('light-border');
+}
+
+/** ADD DARK THEME
+ * Change app components to show dark theme.
+ **/
+function addDarkTheme() {
+    contrastButton.innerHTML = '<i class="material-icons">brightness_4</i>';
+    map.setOptions({ backgroundColor: '#151E29', styles: darkStyle });
+    $('body, #intro > .logo, #intro > .description, #map-controls > .custom-select > select, #map-controls > .custom-select > .label').removeClass('light');
+    $('#map-controls, #zoom-control, #contrast-control, #project-info-control').removeClass('ui-light').addClass('ui-dark');
+    $('.dark-border').removeClass('light-border').addClass('dark-border');
 }
