@@ -187,7 +187,7 @@ function projectInfoControl(controlDiv, map) {
 function addLightTheme() {
     contrastButton.innerHTML = '<i class="material-icons">brightness_5</i>';
     map.setOptions({ backgroundColor: '#F5F5F5', styles: lightStyle });
-    $('body, #header, #header > .logo, #header > .description, #map-controls > .custom-select > select, #map-controls > .custom-select > .label').addClass('light');
+    $('body, #header, #header > .logo, #app-controls a, #app-controls a.selected, #header > .description, #map-controls > .custom-select > select, #map-controls > .custom-select > .label').addClass('light');
     $('#map-controls, #zoom-control, #contrast-control, #project-info-control').removeClass('ui-dark').addClass('ui-light');
     $('.dark-border').removeClass('dark-border').addClass('light-border');
 }
@@ -198,7 +198,7 @@ function addLightTheme() {
 function addDarkTheme() {
     contrastButton.innerHTML = '<i class="material-icons">brightness_4</i>';
     map.setOptions({ backgroundColor: '#151E29', styles: darkStyle });
-    $('body, #header, #header > .logo, #header > .description, #map-controls > .custom-select > select, #map-controls > .custom-select > .label').removeClass('light');
+    $('body, #header, #header > .logo, #app-controls a, #app-controls a.selected, #header > .description, #map-controls > .custom-select > select, #map-controls > .custom-select > .label').removeClass('light');
     $('#map-controls, #zoom-control, #contrast-control, #project-info-control').removeClass('ui-light').addClass('ui-dark');
     $('.dark-border').removeClass('light-border').addClass('dark-border');
 }
