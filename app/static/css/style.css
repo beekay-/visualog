@@ -92,7 +92,6 @@ html, body {
     color: #FFF;
     line-height: 1.5;
     height: 100%;
-    overflow-x: hidden;
 }
 
 body.light {
@@ -160,7 +159,7 @@ a {
     margin-right: 2px;
 }
 
-#header .description {
+/*#header .description {
     font-weight: 500;
     color: rgba(255, 255, 255, 1);
     font-size: 0.813em;
@@ -169,23 +168,31 @@ a {
 
 #header .description.light {
     color: rgba(16, 16, 16, 0.7);
-}
+}*/
 
 #header #app-controls {
     position: relative;
     top: -1px;
+    padding-right: 1em;
 }
 
 #header #app-controls a {
     text-transform: uppercase;
     font-size: 0.625em;
-    letter-spacing: 1px;
     font-weight: 500;
     padding: 0.5em 1em;
     border-radius: 40px;
     align-items: center;
     margin: 0 0.5em;
-    /*border: 2px solid #1C2A3C;*/
+    border: 2px solid #1C2A3C;
+}
+
+#header #app-controls a.light {
+    border: 2px solid #F2F2F2;
+}
+
+#header #app-controls a:last-child {
+    margin-right: 0;
 }
 
 #header #app-controls a.selected, #header #app-controls a:hover {
@@ -252,6 +259,7 @@ a {
     height: 100%;
     top: 0;
     position: absolute;
+    overflow: hidden;
 }
 
 #map {
@@ -382,6 +390,9 @@ a {
 /* RESPONSIVE STUFF */
 
 @media screen and (max-width: 37.5em) {
+    .md-link {
+        top: 0;
+    }
     #map-controls {
         width: calc(100% - 24px);
     }
@@ -392,8 +403,11 @@ a {
     #header .logo {
         margin-right: 0.5em;
     }
-    #header .description {
+    /*#header .description {
         display: none;
+    }*/
+    #header #app-controls {
+        top: 0px;
     }
 }
 
@@ -406,9 +420,9 @@ a {
         padding: 1.108em 1em;
         margin-right: 0.5em;
     }
-    #header #app-controls {
+    /*#header #app-controls {
         letter-spacing: 0;
-    }
+    }*/
     #map-controls .custom-select {
         font-size: 0.688em;
     }
