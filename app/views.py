@@ -28,7 +28,7 @@ def getData():
 	boundingBox = [json.loads(request.data)]
 	JSONData = []
 	# if dataType == 'places':
-	dataCollection = visualog["places"]
-	for data in dataCollection.find({"geometry":{"$geoWithin": {"$geometry": {"type" : "Polygon" ,"coordinates": boundingBox}}}},{"properties.place.name":1, "properties.category":1, "geometry":1}):
-		JSONData.append({"type":"Feature","geometry":data["geometry"], "properties": {"name":data["properties"]["place"]["name"], "category":data["properties"]["category"]}})
-	return jsonify(data = {"type":"FeatureCollection", "features":JSONData})
+	placesCollection = visualog["places"]
+	for place in placesCollection.find({"geometry":{"$geoWithin": {"$geometry": {"type" : "Polygon" ,"coordinates": boundingBox}}}},{"properties.place.name":1, "properties.category":1, "geometry":1}):
+		JSONData.append({"type":"Feature","geometry":place["geometry"], "properties": {"name":place["properties"]["place"]["name"], "category":place["properties"]["category"]}})
+	return jsonify(places = {"type":"FeatureCollection", "features":JSONData})

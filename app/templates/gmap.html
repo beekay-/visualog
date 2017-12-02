@@ -2,13 +2,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<meta name="keywords" content="geospatial data visualization, data visualization, google maps api, moves data, motion visualization">
+<meta name="keywords" content="geospatial data visualization, data visualization, google maps api, moves data, motion visualization, instagram year, healthkit map">
 <link rel="apple-touch-icon-precomposed" href="/static/images/apple-touch-icon.png">
-<meta name="description" content="A visual journey of 2017 by Bilal Karim using the Google Maps API and Moves.">
+<meta name="description" content="A visual journey of Bilal Karim in 2017 presented using the Google Maps API, Moves, Instagram, and HealthKit.">
 <meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1">
 <meta name="theme-color" content="#12181F">
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <title>Visualog &bull; A visual journey</title>
-<link rel="shortcut icon" href="favicon.ico">
+<link rel="shortcut icon" href="/static/favicon.ico">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="/static/css/style.css">
 </head>
@@ -22,9 +23,6 @@
             <a href="#" class="flexbox"><i class="material-icons md-link">camera_alt</i> Photos</a>
             <a href="#" class="flexbox"><i class="material-icons md-link">equalizer</i> Stats</a>
         </div>
-        <!-- <div class="description">
-            <h1>Visual journey of 2017</h1>
-        </div> -->
         <div id="map-controls" class="flexbox ui-dark">
             <div class="custom-select">
                 <span class="label">City</span>
