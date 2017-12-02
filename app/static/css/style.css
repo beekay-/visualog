@@ -159,17 +159,6 @@ a {
     margin-right: 2px;
 }
 
-/*#header .description {
-    font-weight: 500;
-    color: rgba(255, 255, 255, 1);
-    font-size: 0.813em;
-    margin-right: 1em;
-}
-
-#header .description.light {
-    color: rgba(16, 16, 16, 0.7);
-}*/
-
 #header #app-controls {
     position: relative;
     top: -1px;
@@ -403,9 +392,6 @@ a {
     #header .logo {
         margin-right: 0.5em;
     }
-    /*#header .description {
-        display: none;
-    }*/
     #header #app-controls {
         top: 0px;
     }
@@ -420,9 +406,6 @@ a {
         padding: 1.108em 1em;
         margin-right: 0.5em;
     }
-    /*#header #app-controls {
-        letter-spacing: 0;
-    }*/
     #map-controls .custom-select {
         font-size: 0.688em;
     }

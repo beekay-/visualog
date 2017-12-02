@@ -11,8 +11,7 @@ import memcache
 from dateutil.relativedelta import relativedelta
 from flask import Flask, Response, redirect, render_template, request, session, url_for
 from moves import MovesClient, MovesAPIError
-from keys import app_secret, client_id, client_secret
-
+from keys import client_id, client_secret
 
 client_id = client_id
 client_secret = client_secret
