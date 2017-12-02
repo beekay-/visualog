@@ -34,6 +34,17 @@ function initMap() {
 
     // Show Data on Map
     getDataForMap();
+    handleDataInteractivity();
+
+    // City Selector
+    var cityName = document.getElementById('city');
+    cityName.onchange = function() {
+        if (cityName.value === 'calgary') {
+            map.setCenter(calgary);
+        } else if (cityName.value === 'toronto') {
+            map.setCenter(toronto);
+        }
+    };
 
     // Remove Google link so user doesn't get redirected
     google.maps.event.addListener(map, 'idle', function() {
@@ -142,13 +153,19 @@ function addDataToMap(data) {
 
     map.data.setStyle(function(feature) {
         return {
-            icon: '/static/images/marker.svg',
+            icon: '/static/images/red.svg',
             clickable: true,
-            opacity: 0.3,
+            opacity: 0.25,
             optimized: true
         };
     });
+}
 
+/** HANDLE DATA INTERACTIVITY
+ * This function is responsible for handling interactivity of
+ * data such as click and mouseover events.
+ **/
+function handleDataInteractivity() {
     map.data.addListener('click', function(event) {
         var name = event.feature.getProperty('name');
         var category = event.feature.getProperty('category');
