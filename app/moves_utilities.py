@@ -300,7 +300,7 @@ def geojson_place(segment):
 
     # styling
     feature['properties']['icon'] = {
-        "iconUrl": "/static/images/circle-stroked-24.svg",
+        "iconUrl": "/static/images/markers/circle-stroked-24.svg",
         "iconSize": [24, 24],
         "iconAnchor": [12, 12],
         "popupAnchor": [0, -12]
