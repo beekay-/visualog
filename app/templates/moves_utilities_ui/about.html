@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "moves_utilities_ui/base.html" %}
 {% block title %}moves.husk.org. about.{% endblock %}
 {% block head %}
   <link href="/static/collected.css" media="screen" type="text/css" rel="stylesheet" />
@@ -14,41 +14,41 @@
     {% endif %}
 
     <div id="blurb" style="margin-top:16px; width: 500px; color: #666;">
-      <p>This site enables you to export data from the <a href="http://moves-app.com/">Moves</a> 
+      <p>This site enables you to export data from the <a href="http://moves-app.com/">Moves</a>
          activity tracker as GeoJSON files, as well as displaying maps.</p>
-        
+
     {% if not auth %}
         <h2>Questions and answers</h2>
-    
+
         <h3>What is Moves?</h3>
-        <p>The <a href="https://moves-app.com/">Moves</a> mobile application uses your Android device 
+        <p>The <a href="https://moves-app.com/">Moves</a> mobile application uses your Android device
             or iPhone to record movement activity.</p>
- 
+
         <h3>What is moves.husk.org?</h3>
         <p>This is a third-party site that uses the Moves API to let you view and export your Moves
             data. The export format is GeoJSON.</p>
 
         <h3>What is GeoJSON, and why should I care?</h3>
-        <p><a href="http://geojson.org/">GeoJSON</a> is a standard for specifying geographic data 
-            within a <a href="http://www.json.org/">JSON</a> file. JSON itself is "a lightweight 
-            data-interchange format" that "is easy for humans to read and write." In other words, 
-            exporting GeoJSON means you have a copy of your data that you can read, manipulate, 
+        <p><a href="http://geojson.org/">GeoJSON</a> is a standard for specifying geographic data
+            within a <a href="http://www.json.org/">JSON</a> file. JSON itself is "a lightweight
+            data-interchange format" that "is easy for humans to read and write." In other words,
+            exporting GeoJSON means you have a copy of your data that you can read, manipulate,
             and place onto <a href="http://geojson.io">maps</a>.</p>
 
         <h3>What will you do with my Moves data?</h3>
-        <p>moves.husk.org is only an intermediary for your data. It's held in 
-            <a href="http://memcached.org/">memcache</a> (a transient data store) for up to a day, 
-            but otherwise the data isn't stored. In addition, Moves only identifies users by an 
-            arbitrary ID, so moves.husk.org doesn't know who you are, and your access 
-            token for the site is stored as a cookie on your machine, only used by moves.husk.org 
+        <p>moves.husk.org is only an intermediary for your data. It's held in
+            <a href="http://memcached.org/">memcache</a> (a transient data store) for up to a day,
+            but otherwise the data isn't stored. In addition, Moves only identifies users by an
+            arbitrary ID, so moves.husk.org doesn't know who you are, and your access
+            token for the site is stored as a cookie on your machine, only used by moves.husk.org
             for the duration of your page request.</p>
 
         <h3>Can I see how the site is written?</h3>
-        <p>Sure. moves.husk.org is a Python app running Flask, and the source is available 
+        <p>Sure. moves.husk.org is a Python app running Flask, and the source is available
             <a href="https://github.com/blech/moves-geojson/">on github</a>.</p>
 
     {% endif %}
-      <p>- Paul Mison (<a href="https://www.twitter.com/blech">@blech</a>). 
+      <p>- Paul Mison (<a href="https://www.twitter.com/blech">@blech</a>).
            View <a href="https://github.com/blech/moves-geojson/">source</a> on github.</p>
 
     </div>

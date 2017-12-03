@@ -62,4 +62,4 @@ def mostVisited():
     # cursor = placesCollection.aggregate(aggregatePlaces)
     # allPlaces = list(cursor)
     allPlaces = placesCollection.aggregate(aggregatePlaces)
-    return render_template("most-visited.html", allPlaces=allPlaces)
+    return render_template("stats.html", allPlaces=allPlaces)

@@ -38,7 +38,7 @@ def require_token(func):
 @app.route("/godmode")
 def godmode():
     if 'token' not in session:
-        return render_template("about.html", auth=True)
+        return render_template("moves_utilities_ui/about.html", auth=True)
 
     return redirect(url_for('list'))
 
@@ -67,7 +67,7 @@ def logout():
 
 @app.route("/about")
 def about():
-    return render_template("about.html", auth=False)
+    return render_template("moves_utilities_ui/about.html", auth=False)
 
 @app.route('/list')
 @require_token
@@ -84,7 +84,7 @@ def list():
     using_for = get_days_using(profile['profile']['firstDate'])
     months = get_month_range(profile['profile']['firstDate'])
 
-    return render_template("list.html", profile=profile, summary=summary, months=months, days=using_for)
+    return render_template("moves_utilities_ui/list.html", profile=profile, summary=summary, months=months, days=using_for)
 
 @app.route('/list/<month>')
 @require_token
