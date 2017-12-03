@@ -5,7 +5,7 @@ var toronto = new google.maps.LatLng(43.653252, -79.383934);
 var overlay = document.createElement('div');
 var modal = document.createElement('div');
 var contrastButton = document.createElement('div');
-var map, boundingBox, places, placeName, placeCategory;
+var map, boundingBox, placesLayer, places, placeName, placeCategory, movementLayer, movement, movementType;
 
 function initMap() {
     // Set map options
@@ -31,6 +31,10 @@ function initMap() {
 
     // Set map
     map = new google.maps.Map(document.getElementById('map'), mapOptions);
+
+    // Set data layers
+    placesLayer = new google.maps.Data({map: map});
+    movementLayer = new google.maps.Data({map: map});
 
     // Show data on map
     getDataForMap();
@@ -119,38 +123,89 @@ function getBoundingBox() {
  *
 **/
 function getDataForMap() {
+    // if (navigator.userAgent.indexOf('iPhone') != -1 || navigator.userAgent.indexOf('Android') != -1) {}
     google.maps.event.addListener(map, 'idle', function() {
-        boundingBox = getBoundingBox();
-        var getData = '/getData'; // + '?c=' + city;
-        $.ajax({
-            url: getData,
-            type: 'POST',
-            data: JSON.stringify(boundingBox),
-            contentType: 'application/json; charset=utf-8',
-            dataType: 'json',
-            success: function(data) {
-                addDataToMap(data);
-            }
-        });
+        if (map.getZoom() >= 10 && map.getZoom() <= 11) {
+            boundingBox = getBoundingBox();
+            // var getPlaces = '/getPlaces' + '?type=all';
+            $.ajax({
+                url: '/getMovement',
+                type: 'POST',
+                data: JSON.stringify(boundingBox),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function(data) {
+                    addMovementToMap(data);
+                }
+            });
+            $.ajax({
+                url: '/getPlaces',
+                type: 'POST',
+                data: JSON.stringify(boundingBox),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function(data) {
+                    addPlacesToMap(data);
+                }
+            });
+        }
     });
+    // var activitySelector = document.getElementById('activity');
+    // activitySelector.onchange = function () {
+    //     if (activitySelector.value === 'places') {
+    //         $.ajax({
+    //             url: '/getPlaces',
+    //             type: 'POST',
+    //             data: JSON.stringify(boundingBox),
+    //             contentType: 'application/json; charset=utf-8',
+    //             dataType: 'json',
+    //             success: function(data) {
+    //                 addPlacesToMap(data);
+    //             }
+    //         });
+    //     }
+    // };
 }
 
-/** ADD DATA TO MAP
- * This function is responsible for adding data to the map
+/** ADD PLACES TO MAP
+ * This function is responsible for adding places data to the map
  * using Maps API's DataLayer addGeoJSON feature.
  **/
-function addDataToMap(data) {
-    // Minor fix for data layer flicker
-    places = map.data.addGeoJson(data['places']);
-    if (typeof places !== 'undefined') {
-        map.data.forEach(function(feature) {
-            map.data.remove(feature);
-        });
-    }
+function addPlacesToMap(data) {
+    // Minor fix for data layers flicker
+    // places = placesLayer.addGeoJson(data['places']);
+    // if (typeof places !== 'undefined') {
+    //     placesLayer.forEach(function(feature) {
+    //         placesLayer.remove(feature);
+    //     });
+    // }
     // Add places data to map
-    places = map.data.addGeoJson(data['places']);
+    places = placesLayer.addGeoJson(data['places']);
     // Set marker styles
-    map.data.setStyle(markerStyle);
+    placesLayer.setStyle(markerStyle);
+}
+
+/** ADD MOVEMENT TO MAP
+ * This function is responsible for adding movement data to the map
+ * using Maps API's DataLayer addGeoJSON feature.
+ **/
+function addMovementToMap(data) {
+    // Minor fix for data layer flicker
+    // movement = movementLayer.addGeoJson(data['movement']);
+    // if (typeof movement != 'undefined') {
+    //     movementLayer.forEach(function(feature) {
+    //         movementLayer.remove(feature);
+    //     });
+    // }
+    // Add movement data to map
+    movement = movementLayer.addGeoJson(data['movement']);
+    // Set polyline styles
+    movementLayer.setStyle({
+        strokeColor: '#FFF',
+        strokeWeight: 0.1,
+        strokeOpacity: 0.2,
+        clickable: false
+    });
 }
 
 /** MARKER STYLES
@@ -209,9 +264,9 @@ var markerStyle = function(feature) {
     // Misc
     } else if (placeCategory === 'spa' || placeCategory === 'hotel' || placeCategory === 'church' || placeCategory === 'post office' || placeCategory === 'bank' || placeCategory === 'convention centre') {
         return ({
-            icon: '/static/images/markers/white.svg',
+            icon: '/static/images/markers/brown.svg',
             clickable: true,
-            opacity: 0.3,
+            opacity: 0.4,
             optimized: true
         });
     // Vehicle
@@ -231,17 +286,17 @@ var markerStyle = function(feature) {
  **/
 function handleDataInteractivity() {
     // When data on map is clicked...
-    map.data.addListener('click', function(event) {
+    placesLayer.addListener('click', function(event) {
         // Get name, category and location
         placeName = event.feature.getProperty('name');
         placeCategory = event.feature.getProperty('category');
-        var placeLat = event.feature.getProperty('lat');
-        var placeLng = event.feature.getProperty('lng');
+        var placeLat = event.feature.getGeometry().get().lat();
+        var placeLng = event.feature.getGeometry().get().lng();
         var coordinates = new google.maps.LatLng(placeLat, placeLng);
         // If map is less than 13
         if (map.getZoom() < 13) {
             // Zoom into map and pan to clicked place
-            map.setZoom(13);
+            map.setZoom(map.getZoom() + 2);
             map.panTo(coordinates);
         // If zoom is greater than 13, just pan to the clicked place
         } else {
