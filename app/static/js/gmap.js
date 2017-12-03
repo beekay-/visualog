@@ -13,7 +13,7 @@ function initMap() {
         center: calgary,
         zoom: 11,
         minZoom: 10,
-        maxZoom: 15,
+        maxZoom: 14,
         backgroundColor: '#151E29',
         disableDoubleClickZoom: false,
         keyboardShortcuts: false,
@@ -230,9 +230,23 @@ var markerStyle = function(feature) {
  * data such as click and mouseover events.
  **/
 function handleDataInteractivity() {
+    // When data on map is clicked...
     map.data.addListener('click', function(event) {
+        // Get name, category and location
         placeName = event.feature.getProperty('name');
         placeCategory = event.feature.getProperty('category');
+        var placeLat = event.feature.getProperty('lat');
+        var placeLng = event.feature.getProperty('lng');
+        var coordinates = new google.maps.LatLng(placeLat, placeLng);
+        // If map is less than 13
+        if (map.getZoom() < 13) {
+            // Zoom into map and pan to clicked place
+            map.setZoom(13);
+            map.panTo(coordinates);
+        // If zoom is greater than 13, just pan to the clicked place
+        } else {
+            map.panTo(coordinates);
+        }
         console.log(placeName, placeCategory);
     });
 }
