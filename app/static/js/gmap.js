@@ -125,8 +125,8 @@ function getBoundingBox() {
 function getDataForMap() {
     // if (navigator.userAgent.indexOf('iPhone') != -1 || navigator.userAgent.indexOf('Android') != -1) {}
     google.maps.event.addListener(map, 'idle', function() {
+        boundingBox = getBoundingBox();
         if (map.getZoom() >= 10 && map.getZoom() <= 11) {
-            boundingBox = getBoundingBox();
             // var getPlaces = '/getPlaces' + '?type=all';
             $.ajax({
                 url: '/getMovement',
