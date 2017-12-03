@@ -1,66 +1,66 @@
-{% extends "base.html" %}
-{% block title %}moves.husk.org. map for {{ date }}.{% endblock %}
-{% block head %}
-    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
-
-    <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
-    <script src='//api.tiles.mapbox.com/mapbox.js/v1.6.0/mapbox.js'></script>
-    <!-- https://github.com/mlevans/leaflet-hash -->
-    <script src='/static/leaflet-hash.js'></script>
-
-    <link href='//api.tiles.mapbox.com/mapbox.js/v1.6.0/mapbox.css' rel='stylesheet' />
-
-    <link rel="icon" type="image/x-icon" href="/static/favicon.ico">
-    <link href="/geojson/{{ date }}" rel="geojson" type="application/json">
-{% endblock %}
-
-{% block style %}
-    body { margin:0; padding:0; font-family:"helvetica neue", helvetica, arial, sans-serif; font-size:75%; }
-    h1 { color: #ccc; font-size: 36px; letter-spacing: -0.05em; line-height: 52px; padding: 0px 10px 10px 18px; }
-    h1 { background-image: url(/static/whitebg50pc.png); opacity: 1; display: inline; position: relative; }
-    h1 a { color: #ccc; text-decoration: none; }
-    h1 span.sub { font-size: 0.5em; letter-spacing: 0em; }
-    h2 { padding: 10px 0px; }
-    a:hover { color: #fff; background: #00f; }
-    td.summary { width: 40em; }
-    #map { position:absolute; top:0; bottom:0; width:100%; height:100%;}
-{% endblock %}
-
-{% block content %}
-<div id='map'></div>
-<script>
-    var map = L.mapbox.map('map', 'paulmison.gofl3m15')
-               .setView([0, 0], 2);
-
-    var hash = new L.Hash(map);
-    map.zoomControl.setPosition('topright');
-
-    var draw_geojson = function(data) {
-        console.log("in draw_geojson");
-        var markerLayer = L.mapbox.markerLayer()
-
-        markerLayer.on('layeradd', function(e) {
-            var marker = e.layer,
-                feature = marker.feature;
-
-            if (feature.properties.icon) {
-                marker.setIcon(L.icon(feature.properties.icon));
-            }
-        });
-
-        markerLayer.setGeoJSON(data).addTo(map);
-        // TODO this needs a flag for if it's a new or additional JSON
-        // (calculate bounds of all markerLayers?)
-        map.fitBounds(markerLayer.getBounds());
-    };
-
-    $.getJSON($('link[rel="geojson"]').attr("href"), draw_geojson);
-
-    // this works to add on further traces
-    // for (var i = 0; i < 25; i++) {
-    //     geojson = '/geojson/2014-01-'+i
-    //     $.getJSON(geojson, draw_geojson);
-    // }
-
-</script>
-{% endblock %}
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="keywords" content="geospatial data visualization, data visualization, google maps api, moves data, motion visualization, instagram year, healthkit map">
+<link rel="apple-touch-icon-precomposed" href="/static/images/apple-touch-icon.png">
+<meta name="description" content="A visual journey of Bilal Karim in 2017 presented using the Google Maps API, Moves, Instagram, and HealthKit.">
+<meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1">
+<meta name="theme-color" content="#12181F">
+<meta name="csrf-token" content="{{ csrf_token() }}">
+<title>Visualog &bull; A visual journey</title>
+<link rel="shortcut icon" href="/static/favicon.ico">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <div id="header" class="flexbox">
+        <div class="logo flexbox">
+            <a href="/"><h1 class="flexbox"><i class="material-icons md-18">pin_drop</i><strong>Visualog</strong></h1></a>
+        </div>
+        <div id="app-controls" class="flexbox">
+            <a href="/" class="selected flexbox"><i class="material-icons md-link">map</i> Map</a>
+            <a href="/photos" class="flexbox"><i class="material-icons md-link">camera_alt</i> Photos</a>
+            <a href="/stats" class="flexbox"><i class="material-icons md-link">equalizer</i> Stats</a>
+        </div>
+        <div id="map-controls" class="flexbox ui-dark">
+            <div class="custom-select">
+                <span class="label">City</span>
+                <select id="city">
+                    <option value="banff">Banff</option>
+                    <option value="brampton">Brampton</option>
+                    <option value="burlington">Burlington</option>
+                    <option value="calgary" selected>Calgary</option>
+                    <option value="etobicoke">Etobicoke</option>
+                    <option value="hamilton">Hamilton</option>
+                    <option value="mississauga">Mississauga</option>
+                    <option value="oakville">Oakville</option>
+                    <option value="toronto">Toronto</option>
+                </select>
+                <span class="arrow"><i class="material-icons md-18">keyboard_arrow_down</i></span>
+            </div>
+            <div class="custom-select">
+                <span class="label">Activity</span>
+                <select id="activity">
+                    <option value="all">All</option>
+                    <option value="places">Places</option>
+                    <option value="driving">Driving</option>
+                    <option value="walking">Walking</option>
+                    <option value="transit">Transit</option>
+                    <option value="airplane">Airplane</option>
+                    <option value="streetview">Street View</option>
+                </select>
+                <span class="arrow"><i class="material-icons md-18">keyboard_arrow_down</i></span>
+            </div>
+        </div>
+    </div>
+    <div id="map-container">
+        <div id="map"></div>
+        <div id="lat-lng" class="ui-dark"></div>
+    </div>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCivLBv9EE4ATMSsf2HYdDCFc97opYPSUw&amp;use_slippy=true"></script>
+<script src="/static/js/vendor/jquery.js"></script>
+<script src="/static/js/gmap.js"></script>
+<script>window.onload = function() { initMap(); };</script>
+</body>
+</html>

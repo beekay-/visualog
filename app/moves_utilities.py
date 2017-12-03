@@ -112,10 +112,10 @@ def month(month):
 
 @app.route("/map/<date>")
 @require_token
-def map(date):
+def moves_map(date):
     api_date = date.replace('-', '')
     validate_date(api_date)
-    return render_template("map.html", date=date)
+    return render_template("moves/map.html", date=date)
 
 @app.route("/geojson/<date>")
 @require_token
@@ -146,7 +146,7 @@ def show_info():
     profile = get_profile(access_token=session['token'])
     response = 'User ID: %s<br />First day using Moves: %s' % \
         (profile['userId'], profile['profile']['firstDate'])
-    return response + "<br /><a href=\"%s\">Info for today</a>" % url_for('map') + \
+    return response + "<br /><a href=\"%s\">Info for today</a>" % url_for('moves_map') + \
         "<br /><a href=\"%s\">Logout</a>" % url_for('logout')
 
 @app.route("/test")

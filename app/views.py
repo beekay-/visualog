@@ -15,19 +15,17 @@ visualog = client['visualog']
 
 @app.route("/")
 def index():
-    return redirect(url_for('gmap'))
+    return redirect(url_for('map'))
 
 @app.route("/map")
-def gmap():
-    return render_template("gmap.html")
+def map():
+    return render_template("map.html")
 
 @csrf.exempt
 @app.route('/getPlaces', methods=['POST','GET'])
 def getPlaces():
-	# dataType = request.args.get("type", None)
 	boundingBox = [json.loads(request.data)]
 	JSONData = []
-	# if dataType == 'places':
 	placesCollection = visualog["places"]
 	for place in placesCollection.find({"geometry":{"$geoWithin": {"$geometry": {"type" : "Polygon" ,"coordinates": boundingBox}}}},{"properties.place.name":1, "properties.category":1, "geometry":1}):
 		JSONData.append({"type":"Feature","geometry":place["geometry"], "properties": {"name":place["properties"]["place"]["name"], "category":place["properties"]["category"]}})
@@ -36,15 +34,12 @@ def getPlaces():
 @csrf.exempt
 @app.route('/getMovement', methods=['POST','GET'])
 def getMovement():
-	# dataType = request.args.get("type", None)
-	boundingBox = [json.loads(request.data)]
-	JSONData = []
-	# if dataType == 'places':
-	movementCollection = visualog["movement"]
-	# for movement in movementCollection.find({"geometry":{"$geoWithin": {"$geometry": {"type" : "Polygon" ,"coordinates": boundingBox}}}},{"properties.distance":1, "properties.activity":1, "properties.duration":1, "geometry":1}):
-	for movement in movementCollection.find({"geometry":{"$geoWithin": {"$geometry": {"type" : "Polygon" ,"coordinates": boundingBox}}}},{"geometry":1}):
-		JSONData.append({"type":"Feature","geometry":movement["geometry"]})
-	return jsonify(movement = {"type":"FeatureCollection", "features":JSONData})
+    boundingBox = [json.loads(request.data)]
+    JSONData = []
+    movementCollection = visualog["movement"]
+    for movement in movementCollection.find({"geometry":{"$geoWithin": {"$geometry": {"type" : "Polygon" ,"coordinates": boundingBox}}}},{"properties.activity":1, "geometry":1}):
+        JSONData.append({"type":"Feature","geometry":movement["geometry"], "properties": {"activity":movement["properties"]["activity"]}})
+    return jsonify(movement = {"type":"FeatureCollection", "features":JSONData})
 
 @app.route('/stats', methods=['GET'])
 def mostVisited():
