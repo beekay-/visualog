@@ -360,6 +360,28 @@ a {
     position: relative;
 }
 
+#info-window {
+    font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', sans-serif;
+    width: 290px;
+    height: 60px;
+    padding: 1em;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+    position: relative;
+}
+
+#info-window h1 {
+    font-weight: 500;
+    font-size: 1.5em;
+    width: 100%;
+}
+
+.infoBox > img {
+    position: absolute !important;
+    z-index: 1;
+    right: 0;
+}
+
 /* GALLERY */
 
 #instafeed {
@@ -431,6 +453,9 @@ a {
     }
     #instafeed a {
         width: calc(33.3332% - 20px);
+    }
+    #info-window h1 {
+        font-size: 1.250em;
     }
 }
 

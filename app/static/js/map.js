@@ -1,6 +1,6 @@
 /** INIT MAP
  * Set map, map options, loading of data, and map UI.
-**/
+ **/
 function initMap() {
     // Set map options
     var mapOptions = {
@@ -136,8 +136,7 @@ function getBoundingBox() {
 /** GET DATA FOR MAP
  * This function is responsible for getting data from database
  * based on the current bounding box.
- *
-**/
+ **/
 function getDataForMap() {
     // if (navigator.userAgent.indexOf('iPhone') != -1 || navigator.userAgent.indexOf('Android') != -1) {}
     google.maps.event.addListener(map, 'idle', function() {
@@ -207,7 +206,7 @@ function addMovementToMap(data) {
 
 /** MOVEMENT STYLE
  * Set basic movement style.
-**/
+ **/
 var movementStyle = function(feature) {
     return ({
         geodesic: true,
@@ -221,7 +220,7 @@ var movementStyle = function(feature) {
 
 /** HANDLE DYNAMIC STYLING
  * Apply styles based on the item selected from the Activity dropdown.
-**/
+ **/
 function handleDynamicStyling() {
     if (activitySelector.value === 'all') {
         movementLayer.setStyle(movementStyle);
@@ -298,7 +297,7 @@ function handleDynamicStyling() {
             var activity = feature.getProperty('activity');
             if (activity === 'airplane') {
                 return {
-                    strokeColor: '#651FFF',
+                    strokeColor: '#FF3D00',
                     strokeWeight: 0.5,
                     strokeOpacity: 0.25,
                     clickable: false,
@@ -318,7 +317,7 @@ function handleDynamicStyling() {
 
 /** MARKER STYLES
  * Set marker styles based on place category.
-**/
+ **/
 var markerStyle = function(feature) {
     placeCategory = feature.getProperty('category');
     // Eating
@@ -403,6 +402,10 @@ var markerStyle = function(feature) {
 function handleDataInteractivity() {
     // When data on map is clicked...
     placesLayer.addListener('click', function(event) {
+        // Close infoWindow if already opened
+        if (infoWindow) {
+            infoWindow.close();
+        }
         // Get name, category and location
         placeName = event.feature.getProperty('name');
         placeCategory = event.feature.getProperty('category');
@@ -414,11 +417,32 @@ function handleDataInteractivity() {
             // Zoom into map and pan to clicked place
             map.setZoom(map.getZoom() + 2);
             map.panTo(coordinates);
-        // If zoom is greater than 13, just pan to the clicked place
+            map.setCenter(coordinates);
+            // If zoom is greater than 13, just pan to the clicked place
         } else {
             map.panTo(coordinates);
+            map.setCenter(coordinates);
         }
-        console.log(placeName, placeCategory);
+        // Create content div for infoWindow to display place name and category
+        infoWindowContent.id = 'info-window';
+        infoWindowContent.classList = 'ui-dark flexbox';
+        infoWindowContent.innerHTML = '<h1>' + placeName + '</h1>' + '<h2>' + placeCategory + '</h2>';
+        // Set infoWindow options
+        var infoWindowOptions = {
+            content: infoWindowContent,
+            disableAutoPan: true,
+            closeBoxMargin: '1em',
+            pixelOffset: new google.maps.Size(-140, -85),
+            // infoBoxClearance: new google.maps.Size(1, 1),
+            zIndex: 3
+        };
+        // Create infoWindow using infoBox.js
+        infoWindow = new InfoBox(infoWindowOptions);
+        // Set infoWindow position and open on map
+        infoWindow.setPosition(coordinates);
+        infoWindow.open(map);
+        map.panTo(coordinates);
+        // map.setCenter(coordinates);
     });
 }
 
@@ -529,7 +553,8 @@ function addLightTheme() {
         styles: lightStyle
     });
     $('body, #header, #header > .logo, #app-controls a, #app-controls a.selected, #map-controls > .custom-select > select, #map-controls > .custom-select > .label').addClass('light');
-    $('#map-controls, #zoom-control, #contrast-control, #project-info-control').removeClass('ui-dark').addClass('ui-light');
+    $('#map-controls, #zoom-control, #contrast-control, #project-info-control, #info-window').removeClass('ui-dark').addClass('ui-light');
+    $('img[src="/static/images/close-white.svg"]').attr('src', '/static/images/close-black.svg');
     $('.dark-border').removeClass('dark-border').addClass('light-border');
     if (activitySelector.value === 'all') {
         movementLayer.setStyle({
@@ -552,7 +577,8 @@ function addDarkTheme() {
         styles: darkStyle
     });
     $('body, #header, #header > .logo, #app-controls a, #app-controls a.selected, #map-controls > .custom-select > select, #map-controls > .custom-select > .label').removeClass('light');
-    $('#map-controls, #zoom-control, #contrast-control, #project-info-control').removeClass('ui-light').addClass('ui-dark');
+    $('#map-controls, #zoom-control, #contrast-control, #project-info-control, #info-window').removeClass('ui-light').addClass('ui-dark');
+    $('img[src="/static/images/close-black.svg"]').attr('src', '/static/images/close-white.svg');
     $('.dark-border').removeClass('light-border').addClass('dark-border');
     if (activitySelector.value === 'all') {
         movementLayer.setStyle({
