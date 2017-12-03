@@ -9,6 +9,7 @@ import time
 import random
 import os
 from moves_utilities import *
+from keys import instagram_client_id, instagram_access_token
 
 client = MongoClient()
 visualog = client['visualog']
@@ -23,27 +24,7 @@ def map():
 
 @app.route("/photos")
 def photos():
-    return render_template("photos.html")
-
-@csrf.exempt
-@app.route('/getPlaces', methods=['POST','GET'])
-def getPlaces():
-	boundingBox = [json.loads(request.data)]
-	JSONData = []
-	placesCollection = visualog["places"]
-	for place in placesCollection.find({"geometry":{"$geoWithin": {"$geometry": {"type" : "Polygon" ,"coordinates": boundingBox}}}},{"properties.place.name":1, "properties.category":1, "geometry":1}):
-		JSONData.append({"type":"Feature","geometry":place["geometry"], "properties": {"name":place["properties"]["place"]["name"], "category":place["properties"]["category"]}})
-	return jsonify(places = {"type":"FeatureCollection", "features":JSONData})
-
-@csrf.exempt
-@app.route('/getMovement', methods=['POST','GET'])
-def getMovement():
-    boundingBox = [json.loads(request.data)]
-    JSONData = []
-    movementCollection = visualog["movement"]
-    for movement in movementCollection.find({"geometry":{"$geoWithin": {"$geometry": {"type" : "Polygon" ,"coordinates": boundingBox}}}},{"properties.activity":1, "geometry":1}):
-        JSONData.append({"type":"Feature","geometry":movement["geometry"], "properties": {"activity":movement["properties"]["activity"]}})
-    return jsonify(movement = {"type":"FeatureCollection", "features":JSONData})
+    return render_template("photos.html", client_id=instagram_client_id, access_token=instagram_access_token)
 
 @app.route('/stats', methods=['GET'])
 def mostVisited():
@@ -67,3 +48,23 @@ def mostVisited():
     # allPlaces = list(cursor)
     allPlaces = placesCollection.aggregate(aggregatePlaces)
     return render_template("stats.html", allPlaces=allPlaces)
+
+@csrf.exempt
+@app.route('/getPlaces', methods=['POST','GET'])
+def getPlaces():
+	boundingBox = [json.loads(request.data)]
+	JSONData = []
+	placesCollection = visualog["places"]
+	for place in placesCollection.find({"geometry":{"$geoWithin": {"$geometry": {"type" : "Polygon" ,"coordinates": boundingBox}}}},{"properties.place.name":1, "properties.category":1, "geometry":1}):
+		JSONData.append({"type":"Feature","geometry":place["geometry"], "properties": {"name":place["properties"]["place"]["name"], "category":place["properties"]["category"]}})
+	return jsonify(places = {"type":"FeatureCollection", "features":JSONData})
+
+@csrf.exempt
+@app.route('/getMovement', methods=['POST','GET'])
+def getMovement():
+    boundingBox = [json.loads(request.data)]
+    JSONData = []
+    movementCollection = visualog["movement"]
+    for movement in movementCollection.find({"geometry":{"$geoWithin": {"$geometry": {"type" : "Polygon" ,"coordinates": boundingBox}}}},{"properties.activity":1, "geometry":1}):
+        JSONData.append({"type":"Feature","geometry":movement["geometry"], "properties": {"activity":movement["properties"]["activity"]}})
+    return jsonify(movement = {"type":"FeatureCollection", "features":JSONData})
