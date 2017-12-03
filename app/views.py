@@ -21,6 +21,10 @@ def index():
 def map():
     return render_template("map.html")
 
+@app.route("/photos")
+def photos():
+    return render_template("photos.html")
+
 @csrf.exempt
 @app.route('/getPlaces', methods=['POST','GET'])
 def getPlaces():
