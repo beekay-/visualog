@@ -6,7 +6,7 @@ function initMap() {
     var mapOptions = {
         center: calgary,
         zoom: 11,
-        minZoom: 10,
+        minZoom: 4,
         maxZoom: 14,
         backgroundColor: '#151E29',
         disableDoubleClickZoom: false,
@@ -143,8 +143,7 @@ function getDataForMap() {
     google.maps.event.addListener(map, 'idle', function() {
         boundingBox = getBoundingBox();
         if (activitySelector.value === 'all') {
-            if (map.getZoom() >= 10 && map.getZoom() <= 11) {
-                // var getPlaces = '/getPlaces' + '?type=all';
+            if (map.getZoom() >= 4 && map.getZoom() <= 11) {
                 $.ajax({
                     url: '/getMovement',
                     type: 'POST',
@@ -211,9 +210,10 @@ function addMovementToMap(data) {
 **/
 var movementStyle = function(feature) {
     return ({
+        geodesic: true,
         strokeColor: '#FFF',
-        strokeWeight: 0.1,
-        strokeOpacity: 0.2,
+        strokeWeight: 0.5,
+        strokeOpacity: 0.1,
         clickable: false,
         zIndex: 2
     });
@@ -256,7 +256,7 @@ function handleDynamicStyling() {
     } else if (activitySelector.value === 'walking') {
         movementLayer.setStyle(function(feature) {
             var activity = feature.getProperty('activity');
-            if (activity === 'walking') {
+            if (activity === 'walking' || activity === 'cycling' || activity === 'running') {
                 return {
                     strokeColor: '#2979FF',
                     strokeWeight: 0.5,
@@ -298,7 +298,6 @@ function handleDynamicStyling() {
             var activity = feature.getProperty('activity');
             if (activity === 'airplane') {
                 return {
-                    geodesic: true,
                     strokeColor: '#651FFF',
                     strokeWeight: 0.5,
                     strokeOpacity: 0.25,
@@ -445,11 +444,11 @@ function zoomControl(controlDiv, map) {
     controlWrapper.appendChild(zoomOutButton);
     // Controls Functionality
     google.maps.event.addDomListener(zoomOutButton, 'click', function() {
-        map.setZoom(map.getZoom() - 1);
+        map.setZoom(map.getZoom() - 2);
         // ga("send", "event", "Zoomed Out", "Clicks");
     });
     google.maps.event.addDomListener(zoomInButton, 'click', function() {
-        map.setZoom(map.getZoom() + 1);
+        map.setZoom(map.getZoom() + 2);
         // ga("send", "event", "Zoomed In", "Clicks");
     });
 }

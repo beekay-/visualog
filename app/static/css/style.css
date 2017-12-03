@@ -92,6 +92,7 @@ html, body {
     color: #FFF;
     line-height: 1.5;
     height: 100%;
+    overflow-x: hidden;
 }
 
 body.light {
