@@ -5,15 +5,15 @@ var toronto = new google.maps.LatLng(43.653252, -79.383934);
 var overlay = document.createElement('div');
 var modal = document.createElement('div');
 var contrastButton = document.createElement('div');
-var map, boundingBox, places;
+var map, boundingBox, places, placeName, placeCategory;
 
 function initMap() {
-    // Set Map Options
+    // Set map options
     var mapOptions = {
         center: calgary,
         zoom: 11,
         minZoom: 10,
-        maxZoom: 14,
+        maxZoom: 15,
         backgroundColor: '#151E29',
         disableDoubleClickZoom: false,
         keyboardShortcuts: false,
@@ -29,10 +29,10 @@ function initMap() {
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
 
-    // Set Map
+    // Set map
     map = new google.maps.Map(document.getElementById('map'), mapOptions);
 
-    // Show Data on Map
+    // Show data on map
     getDataForMap();
     handleDataInteractivity();
 
@@ -54,19 +54,19 @@ function initMap() {
         });
     });
 
-    // Set Zoom Control
+    // Set zoom control
     var zoomControlDiv = document.createElement('div');
     var zoomControlButton = new zoomControl(zoomControlDiv, map);
     zoomControlDiv.index = 1;
     map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(zoomControlDiv);
 
-    // Set Brightness Control
+    // Set brightness control
     var contrastControlDiv = document.createElement('div');
     var contrastControlButton = new contrastControl(contrastControlDiv, map);
     contrastControlDiv.index = 1;
     map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(contrastControlDiv);
 
-    // Set Project Info Control
+    // Set project info control
     var projectInfoControlDiv = document.createElement('div');
     var projectInfoControlButton = new projectInfoControl(projectInfoControlDiv, map);
     projectInfoControlDiv.index = 1;
@@ -137,8 +137,7 @@ function getDataForMap() {
 
 /** ADD DATA TO MAP
  * This function is responsible for adding data to the map
- * using Maps API's DataLayer addGeoJSON feature. It also handles
- * data styles.
+ * using Maps API's DataLayer addGeoJSON feature.
  **/
 function addDataToMap(data) {
     // Minor fix for data layer flicker
@@ -150,16 +149,81 @@ function addDataToMap(data) {
     }
     // Add places data to map
     places = map.data.addGeoJson(data['places']);
-
-    map.data.setStyle(function(feature) {
-        return {
-            icon: '/static/images/red.svg',
-            clickable: true,
-            opacity: 0.25,
-            optimized: true
-        };
-    });
+    // Set marker styles
+    map.data.setStyle(markerStyle);
 }
+
+/** MARKER STYLES
+ * Set marker styles based on place category.
+**/
+var markerStyle = function(feature) {
+    placeCategory = feature.getProperty('category');
+    // Eating
+    if (placeCategory === 'coffee shop' || placeCategory === 'restaurant' || placeCategory === 'bakery' || placeCategory === 'ice cream shop' || placeCategory === 'juice shop' || placeCategory === 'pizza shop' || placeCategory === 'pub') {
+        return ({
+            icon: '/static/images/markers/blue.svg',
+            clickable: true,
+            opacity: 0.3,
+            optimized: true
+        });
+    // Living
+    } else if (placeCategory === 'home' || placeCategory === 'office' || placeCategory === 'residence' || placeCategory === 'coworking space' || placeCategory === 'university' || placeCategory === 'downtown') {
+        return ({
+            icon: '/static/images/markers/indigo.svg',
+            clickable: true,
+            opacity: 0.3,
+            optimized: true
+        });
+    // Shopping
+    } else if (placeCategory === 'supermarket' || placeCategory === 'shopping mall' || placeCategory === 'clothing store' || placeCategory === 'electronics store' || placeCategory === 'department store' || placeCategory === 'pharmacy' || placeCategory === 'dollar store' || placeCategory === 'supermarket' || placeCategory === 'convenience store' || placeCategory === 'hardware store' || placeCategory === 'art supply store' || placeCategory === 'sports store' || placeCategory === 'camera store' || placeCategory === 'print shop' || placeCategory === 'toy store' || placeCategory === 'shopping mall' || placeCategory === 'gift store') {
+        return ({
+            icon: '/static/images/markers/pink.svg',
+            clickable: true,
+            opacity: 0.3,
+            optimized: true
+        });
+    // Activities
+    } else if (placeCategory === 'park' || placeCategory === 'outdoor centre' || placeCategory === 'bridge' || placeCategory === 'tower' || placeCategory === 'tourist attraction' || placeCategory === 'beach' || placeCategory === 'gym' || placeCategory === 'leisure centre') {
+        return ({
+            icon: '/static/images/markers/green.svg',
+            clickable: true,
+            opacity: 0.7,
+            optimized: true
+        });
+    // Transporation
+    } else if (placeCategory === 'transit station' || placeCategory === 'airport') {
+        return ({
+            icon: '/static/images/markers/amber.svg',
+            clickable: true,
+            opacity: 0.3,
+            optimized: true
+        });
+    // Entertainment
+    } else if (placeCategory === 'movie theatre' || placeCategory === 'car wash' || placeCategory === 'event venue' || placeCategory === 'plaza' || placeCategory === 'museum' || placeCategory === 'arcade' || placeCategory === 'bowling alley' || placeCategory === 'arena' || placeCategory === 'aquarium' || placeCategory === 'festival hall' || placeCategory === 'art centre' || placeCategory === 'cultural centre') {
+        return ({
+            icon: '/static/images/markers/light-blue.svg',
+            clickable: true,
+            opacity: 0.7,
+            optimized: true
+        });
+    // Misc
+    } else if (placeCategory === 'spa' || placeCategory === 'hotel' || placeCategory === 'church' || placeCategory === 'post office' || placeCategory === 'bank' || placeCategory === 'convention centre') {
+        return ({
+            icon: '/static/images/markers/white.svg',
+            clickable: true,
+            opacity: 0.3,
+            optimized: true
+        });
+    // Vehicle
+    } else if (placeCategory === 'car dealership' || placeCategory === 'registry office' || placeCategory === 'gas station' || placeCategory === 'oil change service') {
+        return ({
+            icon: '/static/images/markers/yellow.svg',
+            clickable: true,
+            opacity: 0.9,
+            optimized: true
+        });
+    }
+};
 
 /** HANDLE DATA INTERACTIVITY
  * This function is responsible for handling interactivity of
@@ -167,9 +231,9 @@ function addDataToMap(data) {
  **/
 function handleDataInteractivity() {
     map.data.addListener('click', function(event) {
-        var name = event.feature.getProperty('name');
-        var category = event.feature.getProperty('category');
-        console.log(name, category);
+        placeName = event.feature.getProperty('name');
+        placeCategory = event.feature.getProperty('category');
+        console.log(placeName, placeCategory);
     });
 }
 
