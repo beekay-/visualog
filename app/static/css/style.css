@@ -367,7 +367,6 @@ a {
 #info-window {
     font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', sans-serif;
     width: 290px;
-    height: 60px;
     padding: 1em;
     -webkit-flex-wrap: wrap;
     flex-wrap: wrap;
@@ -377,6 +376,10 @@ a {
 #info-window h1 {
     font-weight: 500;
     font-size: 1.5em;
+    width: 90%;
+}
+
+#info-window h2 {
     width: 100%;
 }
 

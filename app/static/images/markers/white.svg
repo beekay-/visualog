@@ -1,14 +1,6 @@
 <svg width="24" height="24" viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
-    <g fill="#FFFFFF" stroke="#FFFFFF" fill-opacity="0.85" stroke-width="0">
-        <circle cx="22" cy="22" r="9" fill-opacity="0.25" stroke-width="0" stroke-opacity="0.25"></circle>
-        <circle cx="22" cy="22" r="4">
-            <!-- <animate attributeName="r"
-                begin="0s" dur="1s"
-                values="0; 4"
-                calcMode="spline"
-                keyTimes="0; 1"
-                keySplines="0.165, 0.84, 0.44, 1"
-                repeatCount="1" /> -->
-        </circle>
+    <g fill="#FFFFFF" fill-opacity="0.85">
+        <circle cx="22" cy="22" r="9" fill-opacity="0.25"></circle>
+        <circle cx="22" cy="22" r="4"></circle>
     </g>
 </svg>

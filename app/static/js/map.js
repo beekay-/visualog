@@ -184,7 +184,7 @@ var dataLayerStyle = function(feature) {
         // Eating
         if (placeCategory === 'coffee shop' || placeCategory === 'restaurant' || placeCategory === 'bakery' || placeCategory === 'ice cream shop' || placeCategory === 'juice shop' || placeCategory === 'pizza shop' || placeCategory === 'pub') {
             return ({
-                icon: '/static/images/markers/blue.svg',
+                icon: '/static/images/markers/cyan.svg',
                 clickable: true,
                 opacity: 0.3,
                 optimized: true,
@@ -279,7 +279,7 @@ var dataLayerStyle = function(feature) {
         // Eating
         if (placeCategory === 'coffee shop' || placeCategory === 'restaurant' || placeCategory === 'bakery' || placeCategory === 'ice cream shop' || placeCategory === 'juice shop' || placeCategory === 'pizza shop' || placeCategory === 'pub') {
             return ({
-                icon: '/static/images/markers/blue.svg',
+                icon: '/static/images/markers/cyan.svg',
                 clickable: true,
                 opacity: 0.3,
                 optimized: true,
