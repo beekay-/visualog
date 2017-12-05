@@ -139,7 +139,7 @@ function getDataForMap() {
     google.maps.event.addListener(map, 'idle', function() {
         boundingBox = getBoundingBox();
         if (activitySelector.value === 'all') {
-            if (map.getZoom() >= 4 && map.getZoom() <= 11) {
+            if (map.getZoom() >= 3 && map.getZoom() <= 11) {
                 $.ajax({
                     url: '/getData',
                     type: 'POST',
@@ -255,14 +255,25 @@ var dataLayerStyle = function(feature) {
             });
         // Movement
         } else if (movementType === 'car' || movementType === 'walking' || movementType === 'cycling' || movementType === 'running' || movementType === 'train' || movementType === 'bus' || movementType === 'underground' || movementType === 'airplane' || movementType === 'transport') {
-            return ({
-                geodesic: true,
-                strokeColor: '#FFF',
-                strokeWeight: 0.5,
-                strokeOpacity: 0.1,
-                clickable: false,
-                zIndex: 2
-            });
+            if ($('body').hasClass('light')) {
+                return ({
+                    geodesic: true,
+                    strokeColor: '#333',
+                    strokeWeight: 0.5,
+                    strokeOpacity: 0.1,
+                    clickable: false,
+                    zIndex: 2
+                });
+            } else {
+                return ({
+                    geodesic: true,
+                    strokeColor: '#FFF',
+                    strokeWeight: 0.5,
+                    strokeOpacity: 0.1,
+                    clickable: false,
+                    zIndex: 2
+                });
+            }
         }
     } else if (activitySelector.value === 'visits') {
         // Eating
@@ -557,6 +568,7 @@ function projectInfoControl(controlDiv, map) {
  * Change app components to show light theme.
  **/
 function addLightTheme() {
+    dataLayer.setStyle(dataLayerStyle);
     contrastButton.innerHTML = '<i class="material-icons">brightness_5</i>';
     map.setOptions({
         backgroundColor: '#F5F5F5',
@@ -572,6 +584,7 @@ function addLightTheme() {
  * Change app components to show dark theme.
  **/
 function addDarkTheme() {
+    dataLayer.setStyle(dataLayerStyle);
     contrastButton.innerHTML = '<i class="material-icons">brightness_4</i>';
     map.setOptions({
         backgroundColor: '#151E29',
