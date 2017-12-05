@@ -20,8 +20,8 @@
         </div>
         <div id="app-controls" class="flexbox">
             <a href="/" class="flexbox"><i class="material-icons md-link">map</i> Map</a>
-            <a href="/photos" class="selected flexbox"><i class="material-icons md-link">camera_alt</i> Photos</a>
             <a href="/stats" class="flexbox"><i class="material-icons md-link">equalizer</i> Stats</a>
+            <a href="/photos" class="selected flexbox"><i class="material-icons md-link">camera_alt</i> Photos</a>
         </div>
     </div>
     <div id="instafeed" class="flexbox"></div>
@@ -35,7 +35,7 @@ var feed = new Instafeed({
     accessToken: '{{ access_token }}',
     limit: 32,
     resolution: 'standard_resolution',
-    sortBy: 'most-liked'
+    sortBy: 'most-liked' // add fadeInUp
 });
 feed.run();
 </script>

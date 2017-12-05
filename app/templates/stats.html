@@ -11,7 +11,7 @@
 <title>Visualog &bull; A visual journey</title>
 <link rel="shortcut icon" href="/static/favicon.ico">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<link rel="stylesheet" href="/static/css/style.css">
+<link rel="stylesheet" href="/static/css/style.min.css">
 </head>
 <body>
     <div id="header" class="flexbox">
@@ -20,14 +20,29 @@
         </div>
         <div id="app-controls" class="flexbox">
             <a href="/" class="flexbox"><i class="material-icons md-link">map</i> Map</a>
-            <a href="/photos" class="flexbox"><i class="material-icons md-link">camera_alt</i> Photos</a>
             <a href="/stats" class="selected flexbox"><i class="material-icons md-link">equalizer</i> Stats</a>
+            <a href="/photos" class="flexbox"><i class="material-icons md-link">camera_alt</i> Photos</a>
         </div>
     </div>
-    <div>
-        <ol>
-        {% for x in allPlaces %}
-            <li>{{ x['_id'] }} <span class="votes-num">{{ x['count'] }}</span> </li>
+    <div id="stats" class="flexbox">
+        <h1>Top Means of Transportation</h1>
+        <ol class="flexbox">
+        {% for x in allDuration %}
+            <li>{{ x['_id'] }}
+                <span class="count">{{ (x['total']/3600)|round|int }}</span> hours
+                <span>most driven</span>
+                <span>least drive</span>
+                <span>avg driven</span>
+            </li>
+        {% endfor %}
+        </ol>
+        <h1>Top Visited Places</h1>
+        <ol class="categories flexbox">
+        {% for x in allCategories %}
+            <li>{{ x['_id'] }}
+                <span class="count">{{ x['count'] }}</span>
+                <span>most visited</span>
+            </li>
         {% endfor %}
         </ol>
     </div>

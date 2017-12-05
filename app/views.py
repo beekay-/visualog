@@ -1,13 +1,9 @@
 from app import app
-from flask import render_template, render_template_string, send_from_directory, make_response, jsonify, request, redirect, url_for, flash
-from pymongo import MongoClient, ASCENDING, DESCENDING, errors, GEOSPHERE
-import math
+from flask import render_template, send_from_directory, jsonify, request, redirect, url_for
+from pymongo import MongoClient
 from app import csrf
 import json
 from bson.objectid import ObjectId
-import time
-import random
-import os
 from moves_utilities import *
 from keys import instagram_client_id, instagram_access_token
 
@@ -27,10 +23,11 @@ def photos():
     return render_template("photos.html", client_id=instagram_client_id, access_token=instagram_access_token)
 
 @app.route('/stats', methods=['GET'])
-def mostVisited():
+def stats():
     # userIP = request.remote_addr
     placesCollection = visualog["places"]
-    aggregatePlaces = [
+    movementCollection = visualog["movement"]
+    aggregateCategories = [
     	{ "$group": {
     		"_id": {
     			"category": "$properties.category"
@@ -42,29 +39,42 @@ def mostVisited():
     		"count": { "$sum": "$count" }
     	}},
     	{ "$sort": { "count":-1 }},
-    	{ "$limit": 15 }
+    	{ "$limit": 18 }
     ]
+    aggregatePlaces = [
+    	{ "$group": {
+    		"_id": {
+    			"category": "$properties.place.name"
+    		},
+    		"count": { "$sum":1 }
+    	}},
+    	{ "$group": {
+    		"_id": "$_id.category",
+    		"count": { "$sum": "$count" }
+    	}},
+    	{ "$sort": { "count":-1 }},
+    	{ "$limit": 18 }
+    ]
+    aggregateMovement = [ { "$group": { "_id": { "category": "$properties.activity" }, "count": { "$sum":1 } }}, { "$group": { "_id": "$_id.category", "count": { "$sum": "$count" } }}, { "$sort": { "count":-1 }} ]
+    aggregateDuration = [ { "$group": { "_id": "$properties.activity", "total": { "$sum": "$properties.duration" } } }, { "$sort": { "total":-1 } } ]
     # cursor = placesCollection.aggregate(aggregatePlaces)
     # allPlaces = list(cursor)
-    allPlaces = placesCollection.aggregate(aggregatePlaces)
-    return render_template("stats.html", allPlaces=allPlaces)
+    allCategories = placesCollection.aggregate(aggregateCategories)
+    # allPlaces = placesCollection.aggregate(aggregatePlaces)
+    allMovement = movementCollection.aggregate(aggregateMovement)
+    allDuration = movementCollection.aggregate(aggregateDuration)
+    return render_template("stats.html", allCategories=allCategories, allMovement=allMovement, allDuration=allDuration)
 
 @csrf.exempt
-@app.route('/getPlaces', methods=['POST','GET'])
+@app.route('/getData', methods=['POST','GET'])
 def getPlaces():
-	boundingBox = [json.loads(request.data)]
-	JSONData = []
-	placesCollection = visualog["places"]
-	for place in placesCollection.find({"geometry":{"$geoWithin": {"$geometry": {"type" : "Polygon" ,"coordinates": boundingBox}}}},{"properties.place.name":1, "properties.category":1, "geometry":1}):
-		JSONData.append({"type":"Feature","geometry":place["geometry"], "properties": {"name":place["properties"]["place"]["name"], "category":place["properties"]["category"]}})
-	return jsonify(places = {"type":"FeatureCollection", "features":JSONData})
-
-@csrf.exempt
-@app.route('/getMovement', methods=['POST','GET'])
-def getMovement():
     boundingBox = [json.loads(request.data)]
-    JSONData = []
+    placesJSONData = []
+    movementJSONData = []
+    placesCollection = visualog["places"]
     movementCollection = visualog["movement"]
+    for place in placesCollection.find({"geometry":{"$geoWithin": {"$geometry": {"type" : "Polygon" ,"coordinates": boundingBox}}}},{"properties.place.name":1, "properties.category":1, "geometry":1}):
+    	placesJSONData.append({"type":"Feature","geometry":place["geometry"], "properties": {"name":place["properties"]["place"]["name"], "category":place["properties"]["category"]}})
     for movement in movementCollection.find({"geometry":{"$geoWithin": {"$geometry": {"type" : "Polygon" ,"coordinates": boundingBox}}}},{"properties.activity":1, "geometry":1}):
-        JSONData.append({"type":"Feature","geometry":movement["geometry"], "properties": {"activity":movement["properties"]["activity"]}})
-    return jsonify(movement = {"type":"FeatureCollection", "features":JSONData})
+        movementJSONData.append({"type":"Feature","geometry":movement["geometry"], "properties": {"activity":movement["properties"]["activity"]}})
+    return jsonify(placesMovement = {"type":"FeatureCollection", "features":movementJSONData + placesJSONData})
