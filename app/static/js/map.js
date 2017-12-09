@@ -86,16 +86,16 @@ function initMap() {
     map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(projectInfoControlDiv);
 
     // Show coordinates on right click
-    google.maps.event.addListener(map, 'rightclick', function(e) {
-        var lat = e.latLng.lat().toFixed(6);
-        var lng = e.latLng.lng().toFixed(6);
-        var latLng = document.getElementById('lat-lng');
-        latLng.style.bottom = 12 + 'px';
-        latLng.innerHTML = lat + ', ' + lng;
-        setTimeout(function() {
-            latLng.style.bottom = -40 + 'px';
-        }, 3500)
-    });
+    // google.maps.event.addListener(map, 'rightclick', function(e) {
+    //     var lat = e.latLng.lat().toFixed(6);
+    //     var lng = e.latLng.lng().toFixed(6);
+    //     var latLng = document.getElementById('lat-lng');
+    //     latLng.style.bottom = 12 + 'px';
+    //     latLng.innerHTML = lat + ', ' + lng;
+    //     setTimeout(function() {
+    //         latLng.style.bottom = -40 + 'px';
+    //     }, 3500)
+    // });
 
     // Remove UI on long press (click or tap)
     var longpress = false;
