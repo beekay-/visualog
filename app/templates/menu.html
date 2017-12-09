@@ -1,0 +1,12 @@
+<div class="logo flexbox">
+    <a href="/"><h1 class="flexbox"><i class="material-icons md-18">pin_drop</i><strong>Visualog</strong></h1></a>
+</div>
+<div id="app-controls" class="flexbox">
+    {%- for endpoint, title in [ ("map", "Map"), ("stats", "Stats"), ("photos", "Photos") ] %}
+    {% if endpoint == request.endpoint %}
+    <a href="{{ url_for(endpoint) }}" class="selected flexbox">{{ title }}</a>
+    {% else %}
+    <a href="{{ url_for(endpoint) }}" class="flexbox">{{ title }}</a>
+    {% endif %}
+    {% endfor %}
+</div>

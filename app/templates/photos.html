@@ -1,28 +1,7 @@
-<!doctype html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<meta name="keywords" content="geospatial data visualization, data visualization, google maps api, moves data, motion visualization, instagram year, healthkit map">
-<link rel="apple-touch-icon-precomposed" href="/static/images/apple-touch-icon.png">
-<meta name="description" content="A visual journey of Bilal Karim in 2017 presented using the Google Maps API, Moves, Instagram, and HealthKit.">
-<meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1">
-<meta name="theme-color" content="#12181F">
-<meta name="csrf-token" content="{{ csrf_token() }}">
-<title>Visualog &bull; A visual journey</title>
-<link rel="shortcut icon" href="/static/favicon.ico">
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<link rel="stylesheet" href="/static/css/style.min.css">
-</head>
+{% include "header.html" %}
 <body>
     <div id="header" class="flexbox">
-        <div class="logo flexbox">
-            <a href="/"><h1 class="flexbox"><i class="material-icons md-18">pin_drop</i><strong>Visualog</strong></h1></a>
-        </div>
-        <div id="app-controls" class="flexbox">
-            <a href="/" class="flexbox"><i class="material-icons md-link">map</i> Map</a>
-            <a href="/stats" class="flexbox"><i class="material-icons md-link">equalizer</i> Stats</a>
-            <a href="/photos" class="selected flexbox"><i class="material-icons md-link">camera_alt</i> Photos</a>
-        </div>
+        {% include "menu.html" %}
     </div>
     <div id="instafeed" class="flexbox"></div>
 <script src="/static/js/vendor/instafeed.min.js"></script>

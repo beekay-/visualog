@@ -1,28 +1,7 @@
-<!doctype html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<meta name="keywords" content="geospatial data visualization, data visualization, google maps api, moves data, motion visualization, instagram year, healthkit map">
-<link rel="apple-touch-icon-precomposed" href="/static/images/apple-touch-icon.png">
-<meta name="description" content="A visual journey of Bilal Karim in 2017 presented using the Google Maps API, Moves, Instagram, and HealthKit.">
-<meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1">
-<meta name="theme-color" content="#12181F">
-<meta name="csrf-token" content="{{ csrf_token() }}">
-<title>Visualog &bull; A visual journey</title>
-<link rel="shortcut icon" href="/static/favicon.ico">
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<link rel="stylesheet" href="/static/css/style.min.css">
-</head>
+{% include "header.html" %}
 <body>
     <div id="header" class="flexbox">
-        <div class="logo flexbox">
-            <a href="/"><h1 class="flexbox"><i class="material-icons md-18">pin_drop</i><strong>Visualog</strong></h1></a>
-        </div>
-        <div id="app-controls" class="flexbox">
-            <a href="/" class="flexbox"><i class="material-icons md-link">map</i> Map</a>
-            <a href="/stats" class="selected flexbox"><i class="material-icons md-link">equalizer</i> Stats</a>
-            <a href="/photos" class="flexbox"><i class="material-icons md-link">camera_alt</i> Photos</a>
-        </div>
+        {% include "menu.html" %}
     </div>
     <div id="stats" class="flexbox">
         <div class="section">
@@ -82,39 +61,39 @@
                     <span class="circle {{ place }}"></span>
                     <h1><strong>{{ x['_id']|title }}</strong></h1>
                 </div>
-                <h2> {{ x['total'] }} times</h2>
+                <h2> {{ x['total'] }} visits</h2>
                 {% if place == 'coffee shop' %}
-                <h2>Top spot: Starbucks</h2>
+                <h2>Most visited: Starbucks</h2>
                 {% elif place == 'restaurant' %}
-                <h2>Top spot: What A Bagel</h2>
+                <h2>Most visited: What A Bagel</h2>
                 {% elif place == 'transit station' %}
-                <h2>Top spot: McKnight/Westwinds Station</h2>
+                <h2>Most visited: McKnight/Westwinds Station</h2>
                 {% elif place == 'airport' %}
-                <h2>Top spot: Toronto Pearson International Airport</h2>
+                <h2>Most visited: Toronto Pearson International Airport</h2>
                 {% elif place == 'supermarket' %}
-                <h2>Top spot: Real Canadian Superstore</h2>
+                <h2>Most visited: Real Canadian Superstore</h2>
                 {% elif place == 'shopping mall' %}
-                <h2>Top spot: CrossIron Mills</h2>
+                <h2>Most visited: CrossIron Mills</h2>
                 {% elif place == 'hotel' %}
-                <h2>Top spot: Quality Hotel Burlington</h2>
+                <h2>Most visited: Quality Hotel Burlington</h2>
                 {% elif place == 'park' %}
-                <h2>Top spot: Niagara Falls</h2>
+                <h2>Most visited: Niagara Falls</h2>
                 {% elif place == 'car wash' %}
-                <h2>Top spot: Top Gear Car Wash</h2>
+                <h2>Most visited: Top Gear Car Wash</h2>
                 {% elif place == 'pharmacy' %}
-                <h2>Top spot: Shoppers Drugmart</h2>
+                <h2>Most visited: Shoppers Drugmart</h2>
                 {% elif place == 'bakery' %}
-                <h2>Top spot: Crave Cupcakes</h2>
+                <h2>Most visited: Crave Cupcakes</h2>
                 {% elif place == 'movie theatre' %}
-                <h2>Top spot: SilverCity CrossIron Mills Cinemas & XSCAPE Entertainment Centre</h2>
+                <h2>Most visited: SilverCity CrossIron Mills Cinemas & XSCAPE Entertainment Centre</h2>
                 {% elif place == 'coworking space' %}
-                <h2>Top spot: Work Nicer</h2>
+                <h2>Most visited: Work Nicer</h2>
                 {% elif place == 'university' %}
-                <h2>Top spot: University of Calgary Earth Sciences Building</h2>
+                <h2>Most visited: University of Calgary Earth Sciences Building</h2>
                 {% elif place == 'ice cream shop' %}
-                <h2>Top spot: Village Ice Cream</h2>
+                <h2>Most visited: Village Ice Cream</h2>
                 {% elif place == 'bridge' %}
-                <h2>Top spot: Peace Bridge</h2>
+                <h2>Most visited: Peace Bridge</h2>
                 {% endif %}
             </div>
         {% endfor %}

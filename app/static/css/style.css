@@ -75,12 +75,12 @@ table {
     font-size: 18px;
 }
 
-.md-link {
+/*.md-link {
     font-size: 1em;
     margin-right: 5px;
     position: relative;
     top: 1px;
-}
+}*/
 
 /* MAIN */
 
@@ -577,9 +577,9 @@ a {
 /* RESPONSIVE STUFF */
 
 @media screen and (max-width: 37.5em) {
-    .md-link {
+    /*.md-link {
         top: 0;
-    }
+    }*/
     #map-controls {
         width: calc(100% - 24px);
     }
@@ -592,6 +592,14 @@ a {
     }
     #header #app-controls {
         top: 0px;
+        width: 100%;
+        -webkit-justify-content: center;
+        justify-content: center;
+    }
+    #header #app-controls a {
+        width: 33.3332%;
+        -webkit-justify-content: center;
+        justify-content: center;
     }
     #instafeed a {
         width: calc(33.3332% - 20px);
@@ -615,15 +623,15 @@ a {
 }
 
 @media screen and (max-width: 22em) {
-    .md-link {
+    /*.md-link {
         display: none;
-    }
+    }*/
     #header .logo {
         font-size: 0.875em;
         padding: 1.108em 1em;
         margin-right: 0.5em;
     }
     #map-controls .custom-select {
-        font-size: 0.688em;
+        font-size: 0.625em;
     }
 }
