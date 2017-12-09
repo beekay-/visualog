@@ -257,7 +257,6 @@ var dataLayerStyle = function(feature) {
         } else if (movementType === 'car' || movementType === 'walking' || movementType === 'cycling' || movementType === 'running' || movementType === 'train' || movementType === 'bus' || movementType === 'underground' || movementType === 'airplane' || movementType === 'transport') {
             if ($('body').hasClass('light')) {
                 return ({
-                    geodesic: true,
                     strokeColor: '#333',
                     strokeWeight: 0.5,
                     strokeOpacity: 0.1,
@@ -266,7 +265,6 @@ var dataLayerStyle = function(feature) {
                 });
             } else {
                 return ({
-                    geodesic: true,
                     strokeColor: '#FFF',
                     strokeWeight: 0.5,
                     strokeOpacity: 0.1,
@@ -398,7 +396,7 @@ var dataLayerStyle = function(feature) {
     } else if (activitySelector.value === 'airplane') {
         if (movementType === 'airplane') {
             return ({
-                strokeColor: '#FF3D00',
+                strokeColor: '#FFEA00',
                 strokeWeight: 0.5,
                 strokeOpacity: 0.25,
                 clickable: false,
@@ -419,16 +417,26 @@ var dataLayerStyle = function(feature) {
 function handleDataInteractivity() {
     // When data on map is clicked...
     dataLayer.addListener('click', function(event) {
+        setInfoWindow('select', event);
+    });
+    // When data on map is hovered...
+    dataLayer.addListener('mouseover', function(event) {
+        setInfoWindow('hover', event);
+    });
+}
+
+function setInfoWindow(type, event) {
+    // Get name, category and location
+    placeName = event.feature.getProperty('name');
+    placeCategory = event.feature.getProperty('category');
+    var placeLat = event.feature.getGeometry().get().lat();
+    var placeLng = event.feature.getGeometry().get().lng();
+    var coordinates = new google.maps.LatLng(placeLat, placeLng);
+    if (type === 'select') {
         // Close infoWindow if already opened
         if (infoWindow) {
             infoWindow.close();
         }
-        // Get name, category and location
-        placeName = event.feature.getProperty('name');
-        placeCategory = event.feature.getProperty('category');
-        var placeLat = event.feature.getGeometry().get().lat();
-        var placeLng = event.feature.getGeometry().get().lng();
-        var coordinates = new google.maps.LatLng(placeLat, placeLng);
         // If map is less than 13
         if (map.getZoom() < 12) {
             // Zoom into map and pan to clicked place
@@ -440,31 +448,45 @@ function handleDataInteractivity() {
             map.panTo(coordinates);
             map.setCenter(coordinates);
         }
-        // Create content div for infoWindow to display place name and category
-        infoWindowContent.id = 'info-window';
-        if ($('body').hasClass('light')) {
-            infoWindowContent.classList = 'ui-light flexbox';
-        } else {
-            infoWindowContent.classList = 'ui-dark flexbox';
+        createInfoWindow(type, coordinates);
+    } else if (type === 'hover') {
+        // Close infoWindow if already opened
+        if (infoWindow) {
+            infoWindow.close();
         }
-        infoWindowContent.innerHTML = '<h1>' + placeName + '</h1>' + '<h2>' + placeCategory + '</h2>';
-        // Set infoWindow options
-        var infoWindowOptions = {
-            content: infoWindowContent,
-            disableAutoPan: true,
-            closeBoxMargin: '1em',
-            pixelOffset: new google.maps.Size(-140, -85),
-            // infoBoxClearance: new google.maps.Size(1, 1),
-            zIndex: 3
-        };
-        // Create infoWindow using infoBox.js
-        infoWindow = new InfoBox(infoWindowOptions);
-        // Set infoWindow position and open on map
-        infoWindow.setPosition(coordinates);
-        infoWindow.open(map);
+        if (map.getZoom() >= 13) {
+            createInfoWindow(type, coordinates);
+        }
+    }
+}
+
+function createInfoWindow(type, coordinates) {
+    // Create content div for infoWindow to display place name and category
+    infoWindowContent.id = 'info-window';
+    if ($('body').hasClass('light')) {
+        infoWindowContent.classList = 'ui-light flexbox';
+    } else {
+        infoWindowContent.classList = 'ui-dark flexbox';
+    }
+    infoWindowContent.innerHTML = '<h1>' + placeName + '</h1>' + '<h2>' + placeCategory + '</h2>';
+    // Set infoWindow options
+    var infoWindowOptions = {
+        content: infoWindowContent,
+        disableAutoPan: true,
+        closeBoxMargin: '1em',
+        pixelOffset: new google.maps.Size(-140, -85),
+        // infoBoxClearance: new google.maps.Size(1, 1),
+        zIndex: 3
+    };
+    // Create infoWindow using infoBox.js
+    infoWindow = new InfoBox(infoWindowOptions);
+    // Set infoWindow position and open on map
+    infoWindow.setPosition(coordinates);
+    infoWindow.open(map);
+    if (type === 'select') {
         map.panTo(coordinates);
-        // map.setCenter(coordinates);
-    });
+    }
+    // map.setCenter(coordinates);
 }
 
 /** ZOOM CONTROLS

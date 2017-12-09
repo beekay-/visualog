@@ -25,26 +25,100 @@
         </div>
     </div>
     <div id="stats" class="flexbox">
-        <h1>Top Means of Transportation</h1>
-        <ol class="flexbox">
+        <div class="section">
+            <h1>Top means of transportation (by duration)</h1>
+        </div>
+        <div class="card-container flexbox">
         {% for x in allDuration %}
-            <li>{{ x['_id'] }}
-                <span class="count">{{ (x['total']/3600)|round|int }}</span> hours
-                <span>most driven</span>
-                <span>least drive</span>
-                <span>avg driven</span>
-            </li>
+        {% set activity = x['_id'] %}
+            <div class="card">
+                <div class="title flexbox">
+                    <span class="circle {{ activity }}"></span>
+                    <h1><strong>{{ x['_id']|title }}</strong></h1>
+                </div>
+                {% if activity == 'car' %}
+                    <h2>Drove {{ (x['total']/3600)|round|int }} hours, with an average time of {{ (x['avg']/60)|round|int }} minutes.</h2>
+                {% elif activity == 'walking' %}
+                    <h2>Walked {{ (x['total']/3600)|round|int }} hours, with an average time of {{ (x['avg']/60)|round|int }} minutes.</h2>
+                {% elif activity == 'train' %}
+                    <h2>Traveled by train for {{ (x['total']/3600)|round|int }} hours, with an average time of {{ (x['avg']/60)|round|int }} minutes.</h2>
+                {% elif activity == 'airplane' %}
+                    <h2>Flew {{ (x['total']/3600)|round|int }} hours, with an average time of {{ (x['avg']/3600)|round|int }} hours.</h2>
+                {% endif %}
+            </div>
         {% endfor %}
-        </ol>
-        <h1>Top Visited Places</h1>
-        <ol class="categories flexbox">
+        </div>
+        <div class="section">
+            <h1>Top means of transportation (by distance)</h1>
+        </div>
+        <div class="card-container flexbox">
+        {% for x in allDistance %}
+        {% set activity = x['_id'] %}
+            <div class="card">
+                <div class="title flexbox">
+                    <span class="circle {{ activity }}"></span>
+                    <h1><strong>{{ x['_id']|title }}</strong></h1>
+                </div>
+                {% if activity == 'car' %}
+                    <h2>Drove {{ (x['total']/1000)|round|int }} km, with an average distance of {{ (x['avg']/1000)|round|int }} km.</h2>
+                {% elif activity == 'walking' %}
+                    <h2>Walked {{ (x['total']/1000)|round|int }} km, with an average distance of {{ (x['avg']/1000)|round|int }} km.</h2>
+                {% elif activity == 'train' %}
+                    <h2>Traveled by train for {{ (x['total']/1000)|round|int }} km, with an average distance of {{ (x['avg']/1000)|round|int }} km.</h2>
+                {% elif activity == 'airplane' %}
+                    <h2>Flew {{ (x['total']/1000)|round|int }} km, with an average distance of {{ (x['avg']/1000)|round|int }} km.</h2>
+                {% endif %}
+            </div>
+        {% endfor %}
+        </div>
+        <div class="section">
+            <h1>Top visited places</h1>
+        </div>
+        <div class="card-container flexbox">
         {% for x in allCategories %}
-            <li>{{ x['_id'] }}
-                <span class="count">{{ x['count'] }}</span>
-                <span>most visited</span>
-            </li>
+        {% set place = x['_id'] %}
+            <div class="card places">
+                <div class="title flexbox">
+                    <span class="circle {{ place }}"></span>
+                    <h1><strong>{{ x['_id']|title }}</strong></h1>
+                </div>
+                <h2> {{ x['total'] }} times</h2>
+                {% if place == 'coffee shop' %}
+                <h2>Top spot: Starbucks</h2>
+                {% elif place == 'restaurant' %}
+                <h2>Top spot: What A Bagel</h2>
+                {% elif place == 'transit station' %}
+                <h2>Top spot: McKnight/Westwinds Station</h2>
+                {% elif place == 'airport' %}
+                <h2>Top spot: Toronto Pearson International Airport</h2>
+                {% elif place == 'supermarket' %}
+                <h2>Top spot: Real Canadian Superstore</h2>
+                {% elif place == 'shopping mall' %}
+                <h2>Top spot: CrossIron Mills</h2>
+                {% elif place == 'hotel' %}
+                <h2>Top spot: Quality Hotel Burlington</h2>
+                {% elif place == 'park' %}
+                <h2>Top spot: Niagara Falls</h2>
+                {% elif place == 'car wash' %}
+                <h2>Top spot: Top Gear Car Wash</h2>
+                {% elif place == 'pharmacy' %}
+                <h2>Top spot: Shoppers Drugmart</h2>
+                {% elif place == 'bakery' %}
+                <h2>Top spot: Crave Cupcakes</h2>
+                {% elif place == 'movie theatre' %}
+                <h2>Top spot: SilverCity CrossIron Mills Cinemas & XSCAPE Entertainment Centre</h2>
+                {% elif place == 'coworking space' %}
+                <h2>Top spot: Work Nicer</h2>
+                {% elif place == 'university' %}
+                <h2>Top spot: University of Calgary Earth Sciences Building</h2>
+                {% elif place == 'ice cream shop' %}
+                <h2>Top spot: Village Ice Cream</h2>
+                {% elif place == 'bridge' %}
+                <h2>Top spot: Peace Bridge</h2>
+                {% endif %}
+            </div>
         {% endfor %}
-        </ol>
+        </div>
     </div>
 </body>
 </html>

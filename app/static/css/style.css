@@ -402,14 +402,17 @@ a {
     margin: 10px;
     border-radius: 3px;
 }
+
 #instafeed a {
     width: calc(25% - 20px);
     margin: 10px;
-    box-shadow: 0 2px 4px 0 rgba(0,0,0,.05), 0 2px 10px -1px rgba(0,0,0,.15), 0 1px 2px 0 rgba(0,0,0,.22);
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .05), 0 2px 10px -1px rgba(0, 0, 0, .15), 0 1px 2px 0 rgba(0, 0, 0, .22);
     overflow: hidden;
     animation-duration: 0.4s;
 }
+
 #instafeed a img {
+    background: rgba(0, 0, 0, 0.25);
     display: block;
     width: 100%;
     height: 100%;
@@ -417,6 +420,7 @@ a {
     border-radius: 3px;
     transition: transform 0.3s;
 }
+
 #instafeed a img:hover {
     transform: scale3d(1.15, 1.15, 1.15);
     transition: transform 0.3s;
@@ -426,34 +430,116 @@ a {
 /* STATS */
 
 #stats {
-    width: calc(100% - 20px);
     -webkit-flex-wrap: wrap;
     flex-wrap: wrap;
     -webkit-flex-direction: row;
     flex-direction: row;
-    -webkit-justify-content: center;
-    justify-content: center;
-    margin: 10px 10px 20px 10px;
+    /*-webkit-justify-content: center;
+    justify-content: center;*/
+    padding: 1em;
 }
 
-ol {
+#stats .section {
     width: 100%;
-    /*list-style: decimal;*/
-    list-style-position: inside;
+    display: block;
+}
+
+#stats .section h1 {
+    font-size: 0.875em;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 1em;
+    border-radius: 3px;
+    margin-bottom: 10px;
+}
+
+#stats .section:nth-of-type(3) h1, #stats .section:nth-last-of-type(2) h1 {
+    margin-top: 10px;
+}
+
+.card-container {
+    width: 100%;
+    -webkit-flex-wrap: wrap;
     flex-wrap: wrap;
 }
 
-ol.categories li:nth-of-type(1), ol.categories li:nth-of-type(2), ol.categories li:nth-of-type(3) {
+.card {
+    width: calc(25% - 20px);
+    margin: 10px;
+    background: rgba(0, 0, 0, 0.25);
+    padding: 1em;
+    border-radius: 3px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .05), 0 2px 10px -1px rgba(0, 0, 0, .15), 0 1px 2px 0 rgba(0, 0, 0, .22);
+    font-size: 0.813em;
+    transition: background 0.2s;
+}
+
+.card.places:nth-of-type(1), .card.places:nth-of-type(2), .card.places:nth-of-type(3) {
     display: none;
 }
 
-ol li {
-    width: calc(25% - 20px);
-    margin: 10px;
-    background: rgba(0, 0, 0, 0.1);
-    padding: 1em;
-    border-radius: 3px;
-    box-shadow: 0 2px 4px 0 rgba(0,0,0,.05), 0 2px 10px -1px rgba(0,0,0,.15), 0 1px 2px 0 rgba(0,0,0,.22);
+.card:hover {
+    background: #1C2A3C;
+    transition: background 0.2s;
+}
+
+.card .title {
+    -webkit-align-items: center;
+    align-items: center;
+    padding-bottom: 5px;
+}
+
+.card h1 {
+    display: inline;
+    text-transform: uppercase;
+    font-size: 1em;
+}
+
+.circle {
+    width: 6px;
+    height: 6px;
+    border-radius: 10px;
+    margin-right: 10px;
+    display: inline-block;
+}
+
+.car {
+    background: #F50057;
+}
+
+.walking {
+    background: #2979FF;
+}
+
+.train {
+    background: #00E676;
+}
+
+.airplane {
+    background: #FFEA00;
+}
+
+.coffee, .bakery, .juice, .restaurant, .cream {
+    background: #00E5FF;
+}
+
+.mall, .supermarket {
+    background: #F50057;
+}
+
+.office, .home, .residence, .coworking, .university {
+    background: #3D5AFE;
+}
+
+.park, .bridge {
+    background: #00E676;
+}
+
+.transit, .airport {
+    background: #FFC400;
+}
+
+.wash, .hotel, .pharmacy, .movie {
+    background: #00B0FF;
 }
 
 /* ANIMATION */
@@ -472,6 +558,7 @@ ol li {
 .fadeInUp {
     animation-name: fadeInUp;
 }
+
 @keyframes zoomIn {
     from {
         opacity: 0;

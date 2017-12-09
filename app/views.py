@@ -24,46 +24,19 @@ def photos():
 
 @app.route('/stats', methods=['GET'])
 def stats():
-    # userIP = request.remote_addr
     placesCollection = visualog["places"]
     movementCollection = visualog["movement"]
-    aggregateCategories = [
-    	{ "$group": {
-    		"_id": {
-    			"category": "$properties.category"
-    		},
-    		"count": { "$sum":1 }
-    	}},
-    	{ "$group": {
-    		"_id": "$_id.category",
-    		"count": { "$sum": "$count" }
-    	}},
-    	{ "$sort": { "count":-1 }},
-    	{ "$limit": 18 }
-    ]
-    aggregatePlaces = [
-    	{ "$group": {
-    		"_id": {
-    			"category": "$properties.place.name"
-    		},
-    		"count": { "$sum":1 }
-    	}},
-    	{ "$group": {
-    		"_id": "$_id.category",
-    		"count": { "$sum": "$count" }
-    	}},
-    	{ "$sort": { "count":-1 }},
-    	{ "$limit": 18 }
-    ]
-    aggregateMovement = [ { "$group": { "_id": { "category": "$properties.activity" }, "count": { "$sum":1 } }}, { "$group": { "_id": "$_id.category", "count": { "$sum": "$count" } }}, { "$sort": { "count":-1 }} ]
-    aggregateDuration = [ { "$group": { "_id": "$properties.activity", "total": { "$sum": "$properties.duration" } } }, { "$sort": { "total":-1 } } ]
+    aggregateCategories = [ { "$group": { "_id": { "category": "$properties.category" }, "total": { "$sum":1 } }}, { "$group": { "_id": "$_id.category", "total": { "$sum": "$total" } }}, { "$sort": { "total":-1 }}, { "$limit": 19 } ]
+    # aggregatePlaces = [ { "$group": { "_id": { "category": "$properties.place.name" }, "count": { "$sum":1 } }}, { "$group": { "_id": "$_id.category", "count": { "$sum": "$count" } }}, { "$sort": { "count":-1 }} ]
+    aggregateDuration = [ { "$group": { "_id": "$properties.activity", "total": { "$sum": "$properties.duration" }, "avg": { "$avg": "$properties.duration" } } }, { "$sort": { "total":-1 } }, { "$limit": 4 } ]
+    aggregateDistance = [ { "$group": { "_id": "$properties.activity", "total": { "$sum": "$properties.distance" }, "avg": { "$avg": "$properties.distance" } } }, { "$sort": { "total":-1 } }, { "$limit": 4 } ]
     # cursor = placesCollection.aggregate(aggregatePlaces)
     # allPlaces = list(cursor)
-    allCategories = placesCollection.aggregate(aggregateCategories)
     # allPlaces = placesCollection.aggregate(aggregatePlaces)
-    allMovement = movementCollection.aggregate(aggregateMovement)
+    allCategories = placesCollection.aggregate(aggregateCategories)
     allDuration = movementCollection.aggregate(aggregateDuration)
-    return render_template("stats.html", allCategories=allCategories, allMovement=allMovement, allDuration=allDuration)
+    allDistance = movementCollection.aggregate(aggregateDistance)
+    return render_template("stats.html", allCategories=allCategories, allDuration=allDuration, allDistance=allDistance)
 
 @csrf.exempt
 @app.route('/getData', methods=['POST','GET'])
