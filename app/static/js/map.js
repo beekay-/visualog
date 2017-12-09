@@ -417,22 +417,25 @@ var dataLayerStyle = function(feature) {
 function handleDataInteractivity() {
     // When data on map is clicked...
     dataLayer.addListener('click', function(event) {
-        setInfoWindow('select', event);
-    });
-    // When data on map is hovered...
-    dataLayer.addListener('mouseover', function(event) {
-        setInfoWindow('hover', event);
-    });
-}
-
-function setInfoWindow(type, event) {
-    // Get name, category and location
-    placeName = event.feature.getProperty('name');
-    placeCategory = event.feature.getProperty('category');
-    var placeLat = event.feature.getGeometry().get().lat();
-    var placeLng = event.feature.getGeometry().get().lng();
-    var coordinates = new google.maps.LatLng(placeLat, placeLng);
-    if (type === 'select') {
+        placeName = event.feature.getProperty('name');
+        placeCategory = event.feature.getProperty('category');
+        var placeLat = event.feature.getGeometry().get().lat();
+        var placeLng = event.feature.getGeometry().get().lng();
+        var coordinates = new google.maps.LatLng(placeLat, placeLng);
+        $.ajax({
+            url: '/getTotalVisits?p=' + placeName,
+            type: 'GET',
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            async: false,
+            success: function(data) {
+                if (data.total === 0) {
+                    totalVisits = 1;
+                } else {
+                    totalVisits = data.total;
+                }
+            }
+        });
         // Close infoWindow if already opened
         if (infoWindow) {
             infoWindow.close();
@@ -448,19 +451,19 @@ function setInfoWindow(type, event) {
             map.panTo(coordinates);
             map.setCenter(coordinates);
         }
-        createInfoWindow(type, coordinates);
-    } else if (type === 'hover') {
-        // Close infoWindow if already opened
-        if (infoWindow) {
-            infoWindow.close();
-        }
-        if (map.getZoom() >= 13) {
-            createInfoWindow(type, coordinates);
-        }
-    }
+        createInfoWindow(coordinates, placeName, totalVisits);
+    });
+    // When data on map is hovered...
+    // dataLayer.addListener('mouseover', function(event) {
+    //     setInfoWindow('hover', event);
+    // });
 }
 
-function createInfoWindow(type, coordinates) {
+/** CREATE INFO WINDOW
+ * This function is responsible for the creation of infoWindow
+ * to display place related data.
+ **/
+function createInfoWindow(coordinates, placeName, totalVisits) {
     // Create content div for infoWindow to display place name and category
     infoWindowContent.id = 'info-window';
     if ($('body').hasClass('light')) {
@@ -468,7 +471,7 @@ function createInfoWindow(type, coordinates) {
     } else {
         infoWindowContent.classList = 'ui-dark flexbox';
     }
-    infoWindowContent.innerHTML = '<h1>' + placeName + '</h1>' + '<h2>' + placeCategory + '</h2>';
+    infoWindowContent.innerHTML = '<h1>' + placeName + '</h1>' + '<h2>' + placeCategory + '</h2>' + '<h2>visited ' + totalVisits + ' times' + '</h2>';
     // Set infoWindow options
     var infoWindowOptions = {
         content: infoWindowContent,
@@ -483,9 +486,6 @@ function createInfoWindow(type, coordinates) {
     // Set infoWindow position and open on map
     infoWindow.setPosition(coordinates);
     infoWindow.open(map);
-    if (type === 'select') {
-        map.panTo(coordinates);
-    }
     // map.setCenter(coordinates);
 }
 

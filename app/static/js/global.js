@@ -8,7 +8,7 @@ var hamilton = new google.maps.LatLng(43.253467, -79.868645);
 var mississauga = new google.maps.LatLng(43.588922, -79.650944);
 var oakville = new google.maps.LatLng(43.468296, -79.687563);
 var toronto = new google.maps.LatLng(43.653252, -79.383934);
-var map, boundingBox, dataLayer, placesMovement, placeName, placeCategory, movementType, infoWindow;
+var map, boundingBox, dataLayer, placesMovement, placeName, placeCategory, movementType, infoWindow, totalVisits;
 
 // UI
 var overlay = document.createElement('div');
