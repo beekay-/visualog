@@ -67,6 +67,11 @@ function initMap() {
         });
     });
 
+    lightTheme = sessionStorage.getItem('light-theme');
+    if (lightTheme) {
+        addLightTheme();
+    }
+
     // Set zoom control
     var zoomControlDiv = document.createElement('div');
     var zoomControlButton = new zoomControl(zoomControlDiv, map);
@@ -190,14 +195,19 @@ var dataLayerStyle = function(feature) {
                 optimized: true,
                 zIndex: 1
             });
-        // Living
-        } else if (placeCategory === 'home' || placeCategory === 'office' || placeCategory === 'residence' || placeCategory === 'coworking space' || placeCategory === 'university' || placeCategory === 'downtown') {
+        // Work
+        } else if (placeCategory === 'coworking space' || placeCategory === 'university' || placeCategory === 'downtown') {
             return ({
                 icon: '/static/images/markers/indigo.svg',
                 clickable: true,
                 opacity: 0.3,
                 optimized: true,
                 zIndex: 1
+            });
+        } else if (placeCategory === 'home' || placeCategory === 'office' || placeCategory === 'residence') {
+            return ({
+                clickable: false,
+                visible: false
             });
         // Shopping
         } else if (placeCategory === 'supermarket' || placeCategory === 'shopping mall' || placeCategory === 'clothing store' || placeCategory === 'electronics store' || placeCategory === 'department store' || placeCategory === 'pharmacy' || placeCategory === 'dollar store' || placeCategory === 'supermarket' || placeCategory === 'convenience store' || placeCategory === 'hardware store' || placeCategory === 'art supply store' || placeCategory === 'sports store' || placeCategory === 'camera store' || placeCategory === 'print shop' || placeCategory === 'toy store' || placeCategory === 'shopping mall' || placeCategory === 'gift store') {
@@ -477,7 +487,7 @@ function createInfoWindow(coordinates, placeName, totalVisits) {
         content: infoWindowContent,
         disableAutoPan: true,
         closeBoxMargin: '1em',
-        pixelOffset: new google.maps.Size(-140, -85),
+        pixelOffset: new google.maps.Size(-140, -90),
         // infoBoxClearance: new google.maps.Size(1, 1),
         zIndex: 3
     };
@@ -496,7 +506,11 @@ function zoomControl(controlDiv, map) {
     controlDiv.style.padding = '0 12px 12px 12px';
     var controlWrapper = document.createElement('div');
     controlWrapper.id = 'zoom-control';
-    controlWrapper.classList = 'ui-dark map-control';
+    if ($('body').hasClass('light')) {
+        controlWrapper.classList = 'ui-light map-control';
+    } else {
+        controlWrapper.classList = 'ui-dark map-control';
+    }
     controlDiv.appendChild(controlWrapper);
     // Zoom In Button
     var zoomInButton = document.createElement('div');
@@ -527,7 +541,11 @@ function contrastControl(controlDiv, map) {
     controlDiv.style.padding = '12px';
     var controlWrapper = document.createElement('div');
     controlWrapper.id = 'contrast-control';
-    controlWrapper.classList = 'ui-dark map-control';
+    if ($('body').hasClass('light')) {
+        controlWrapper.classList = 'ui-light map-control';
+    } else {
+        controlWrapper.classList = 'ui-dark map-control';
+    }
     controlDiv.appendChild(controlWrapper);
     // Contrast Button
     contrastButton.style.padding = '4px';
@@ -551,7 +569,11 @@ function projectInfoControl(controlDiv, map) {
     controlDiv.style.padding = '12px 12px 0 12px';
     var controlWrapper = document.createElement('div');
     controlWrapper.id = 'project-info-control';
-    controlWrapper.classList = 'ui-dark map-control';
+    if ($('body').hasClass('light')) {
+        controlWrapper.classList = 'ui-light map-control';
+    } else {
+        controlWrapper.classList = 'ui-dark map-control';
+    }
     controlDiv.appendChild(controlWrapper);
     // Project Info Button
     var projectInfoButton = document.createElement('div');
@@ -600,6 +622,7 @@ function addLightTheme() {
     $('#map-controls, #zoom-control, #contrast-control, #project-info-control, #info-window').removeClass('ui-dark').addClass('ui-light');
     $('img[src="/static/images/close-white.svg"]').attr('src', '/static/images/close-black.svg');
     $('.dark-border').removeClass('dark-border').addClass('light-border');
+    sessionStorage.setItem('light-theme', true);
 }
 
 /** ADD DARK THEME
@@ -616,4 +639,5 @@ function addDarkTheme() {
     $('#map-controls, #zoom-control, #contrast-control, #project-info-control, #info-window').removeClass('ui-light').addClass('ui-dark');
     $('img[src="/static/images/close-black.svg"]').attr('src', '/static/images/close-white.svg');
     $('.dark-border').removeClass('light-border').addClass('dark-border');
+    sessionStorage.removeItem('light-theme');
 }

@@ -96,7 +96,7 @@ html, body {
 }
 
 body.light {
-    background: #FFF;
+    background: #F5F5F5;
     color: rgba(16, 16, 16, 0.7);
 }
 
@@ -409,6 +409,7 @@ a {
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .05), 0 2px 10px -1px rgba(0, 0, 0, .15), 0 1px 2px 0 rgba(0, 0, 0, .22);
     overflow: hidden;
     animation-duration: 0.4s;
+    border-radius: 3px;
 }
 
 #instafeed a img {
@@ -448,6 +449,10 @@ a {
     border-radius: 3px;
 }
 
+#stats .section.light {
+    background: #E5E5E5;
+}
+
 #stats .section h1 {
     font-size: 0.875em;
     padding: 1em;
@@ -471,7 +476,15 @@ a {
     border-radius: 3px;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .05), 0 2px 10px -1px rgba(0, 0, 0, .15), 0 1px 2px 0 rgba(0, 0, 0, .22);
     font-size: 0.813em;
-    transition: background 0.2s;
+    transition: all 0.2s;
+}
+
+.card.light {
+    background: #FFF;
+}
+
+.card.light:hover {
+    background: #FFF;
 }
 
 .card.places:nth-of-type(1), .card.places:nth-of-type(2), .card.places:nth-of-type(3) {
@@ -480,7 +493,8 @@ a {
 
 .card:hover {
     background: #1C2A3C;
-    transition: background 0.2s;
+    transition: all 0.2s;
+    box-shadow: 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12), 0 2px 4px -1px rgba(0,0,0,.2);
 }
 
 .card .title {

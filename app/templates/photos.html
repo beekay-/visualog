@@ -18,5 +18,14 @@ var feed = new Instafeed({
 });
 feed.run();
 </script>
+<script src="/static/js/vendor/jquery.js"></script>
+<script>
+$(document).ready(function(){
+    var lightTheme = sessionStorage.getItem('light-theme');
+    if (lightTheme) {
+        $('body, #header, #header > .logo, #app-controls a, #app-controls a.selected, .section, .card').addClass('light');
+    }
+});
+</script>
 </body>
 </html>
