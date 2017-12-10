@@ -481,7 +481,11 @@ function createInfoWindow(coordinates, placeName, totalVisits) {
     } else {
         infoWindowContent.classList = 'ui-dark flexbox';
     }
-    infoWindowContent.innerHTML = '<h1>' + placeName + '</h1>' + '<h2>' + placeCategory + '</h2>' + '<h2>visited ' + totalVisits + ' times' + '</h2>';
+    if (totalVisits === 1) {
+        infoWindowContent.innerHTML = '<h1>' + placeName + '</h1>' + '<h2><span style="margin-right: 5px;" class="circle ' + placeCategory + '"></span>' + placeCategory + ' / visited ' + totalVisits + ' time' + '</h2>';
+    } else {
+        infoWindowContent.innerHTML = '<h1>' + placeName + '</h1>' + '<h2><span style="margin-right: 5px;" class="circle ' + placeCategory + '"></span>' + placeCategory + ' / visited ' + totalVisits + ' times' + '</h2>';
+    }
     // Set infoWindow options
     var infoWindowOptions = {
         content: infoWindowContent,
@@ -593,6 +597,7 @@ function projectInfoControl(controlDiv, map) {
             // Else keep it dark
             modal.classList = 'modal ui-dark animated fadeInUp';
         }
+        modal.innerHTML = '<strong>Visualog</strong> is an experiment at visualizing the journey of Bilal Karim in 2017 using Google Maps API, with data from Moves and Instagram.';
         document.body.appendChild(overlay);
         overlay.appendChild(modal);
         // ga("send", "event", "Project Info", "Views");
