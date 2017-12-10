@@ -196,7 +196,7 @@ var dataLayerStyle = function(feature) {
                 zIndex: 1
             });
         // Work
-        } else if (placeCategory === 'coworking space' || placeCategory === 'university' || placeCategory === 'downtown') {
+        } else if (placeCategory === 'office' || placeCategory === 'coworking space' || placeCategory === 'university' || placeCategory === 'downtown') {
             return ({
                 icon: '/static/images/markers/indigo.svg',
                 clickable: true,
@@ -204,7 +204,8 @@ var dataLayerStyle = function(feature) {
                 optimized: true,
                 zIndex: 1
             });
-        } else if (placeCategory === 'home' || placeCategory === 'office' || placeCategory === 'residence') {
+        // Living
+        } else if (placeCategory === 'home' || placeCategory === 'residence') {
             return ({
                 clickable: false,
                 visible: false
@@ -293,14 +294,20 @@ var dataLayerStyle = function(feature) {
                 optimized: true,
                 zIndex: 1
             });
-        // Living
-        } else if (placeCategory === 'home' || placeCategory === 'office' || placeCategory === 'residence' || placeCategory === 'coworking space' || placeCategory === 'university' || placeCategory === 'downtown') {
+        // Work
+        } else if (placeCategory === 'office' || placeCategory === 'coworking space' || placeCategory === 'university' || placeCategory === 'downtown') {
             return ({
                 icon: '/static/images/markers/indigo.svg',
                 clickable: true,
                 opacity: 0.3,
                 optimized: true,
                 zIndex: 1
+            });
+        // Living
+        } else if (placeCategory === 'home' || placeCategory === 'residence') {
+            return ({
+                clickable: false,
+                visible: false
             });
         // Shopping
         } else if (placeCategory === 'supermarket' || placeCategory === 'shopping mall' || placeCategory === 'clothing store' || placeCategory === 'electronics store' || placeCategory === 'department store' || placeCategory === 'pharmacy' || placeCategory === 'dollar store' || placeCategory === 'supermarket' || placeCategory === 'convenience store' || placeCategory === 'hardware store' || placeCategory === 'art supply store' || placeCategory === 'sports store' || placeCategory === 'camera store' || placeCategory === 'print shop' || placeCategory === 'toy store' || placeCategory === 'shopping mall' || placeCategory === 'gift store') {
