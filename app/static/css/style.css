@@ -157,7 +157,7 @@ a {
 }
 
 #header .logo h1 .material-icons {
-    margin-right: 2px;
+    margin-right: 4px;
 }
 
 #header #app-controls {
@@ -586,6 +586,46 @@ a {
 
 .zoomIn {
     animation-name: zoomIn;
+}
+
+@keyframes kolorlover {
+    0% {
+        color: #2979FF;
+    }
+    10% {
+        color: #FF1744;
+    }
+    20% {
+        color: #00E676;
+    }
+    30% {
+        color: #651FFF;
+    }
+    40% {
+        color: #FFEA00;
+    }
+    50% {
+        color: #F50057;
+    }
+    60% {
+        color: #00B0FF;
+    }
+    70% {
+        color: #D500F9;
+    }
+    80% {
+        color: #76FF03;
+    }
+    90% {
+        color: #FF3D00;
+    }
+    100% {
+        color: #1DE9B6;
+    }
+}
+
+.pin {
+    animation: kolorlover 30s infinite alternate;
 }
 
 /* RESPONSIVE STUFF */
