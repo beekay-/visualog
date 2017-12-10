@@ -6,6 +6,7 @@ module.exports = function (grunt) {
             map: {
                 src: [
                     'app/static/js/vendor/jquery.js',
+                    'app/static/js/vendor/infobox.js',
                     'app/static/js/global.js',
                     'app/static/js/map.js'
                 ],
