@@ -39,22 +39,31 @@ function initMap() {
     var cityName = document.getElementById('city');
     cityName.onchange = function() {
         if (cityName.value === 'banff') {
+            map.setZoom(11);
             map.panTo(banff);
         } else if (cityName.value === 'brampton') {
+            map.setZoom(11);
             map.panTo(brampton);
         } else if (cityName.value === 'burlington') {
+            map.setZoom(11);
             map.panTo(burlington);
         } else if (cityName.value === 'calgary') {
+            map.setZoom(11);
             map.panTo(calgary);
         } else if (cityName.value === 'etobicoke') {
+            map.setZoom(11);
             map.panTo(etobicoke);
         } else if (cityName.value === 'hamilton') {
+            map.setZoom(11);
             map.panTo(hamilton);
         } else if (cityName.value === 'mississauga') {
+            map.setZoom(11);
             map.panTo(mississauga);
         } else if (cityName.value === 'oakville') {
+            map.setZoom(11);
             map.panTo(oakville);
         } else if (cityName.value === 'toronto') {
+            map.setZoom(11);
             map.panTo(toronto);
         }
     };
