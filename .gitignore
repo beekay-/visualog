@@ -3,3 +3,5 @@ qgis.text
 keys.py
 node_modules
 app/static/js/app.js
+app/static/images/apple-touch-icon.psd
+app/static/images/startup-screen.psd

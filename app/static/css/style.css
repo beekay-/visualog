@@ -181,6 +181,15 @@ a {
     background: rgba(0, 0, 0, 0.05);
 }
 
+#header img {
+    margin-right: 6px;
+}
+
+#header .title {
+    position: relative;
+    top: -1px;
+}
+
 #header h1 {
     -webkit-align-items: center;
     align-items: center;
@@ -423,14 +432,11 @@ a {
 /* GALLERY */
 
 #instafeed {
-    width: calc(100% - 20px);
+    width: 100%;
     -webkit-flex-wrap: wrap;
     flex-wrap: wrap;
-    -webkit-flex-direction: row;
-    flex-direction: row;
     -webkit-justify-content: center;
     justify-content: center;
-    margin: 10px;
     border-radius: 3px;
 }
 
@@ -459,9 +465,9 @@ a {
     border-radius: 3px;
 }
 
-/* STATS */
+/* STATS & PHOTO */
 
-#stats {
+.content {
     -webkit-flex-wrap: wrap;
     flex-wrap: wrap;
     -webkit-flex-direction: row;
@@ -469,7 +475,7 @@ a {
     padding: 1em;
 }
 
-#stats .section {
+.content .section {
     width: 100%;
     display: block;
     position: -webkit-sticky;
@@ -480,16 +486,16 @@ a {
     border-radius: 3px;
 }
 
-#stats .section.light {
+.content .section.light {
     background: #E5E5E5;
 }
 
-#stats .section h1 {
+.content .section h1 {
     font-size: 0.875em;
     padding: 1em;
 }
 
-#stats .section:nth-of-type(3), #stats .section:nth-last-of-type(2) {
+.content .section:nth-of-type(3), .content.section:nth-last-of-type(2) {
     margin-top: 10px;
 }
 
@@ -619,46 +625,6 @@ a {
     animation-name: zoomIn;
 }
 
-@keyframes kolorlover {
-    0% {
-        color: #2979FF;
-    }
-    10% {
-        color: #FF1744;
-    }
-    20% {
-        color: #00E676;
-    }
-    30% {
-        color: #651FFF;
-    }
-    40% {
-        color: #FFEA00;
-    }
-    50% {
-        color: #F50057;
-    }
-    60% {
-        color: #00B0FF;
-    }
-    70% {
-        color: #D500F9;
-    }
-    80% {
-        color: #76FF03;
-    }
-    90% {
-        color: #FF3D00;
-    }
-    100% {
-        color: #1DE9B6;
-    }
-}
-
-.pin {
-    animation: kolorlover 30s infinite alternate;
-}
-
 /* RESPONSIVE STUFF */
 
 @media screen and (max-width: 37.5em) {
@@ -692,10 +658,10 @@ a {
     #info-window h1 {
         font-size: 1.250em;
     }
-    #stats {
+    .content {
         padding: 0;
     }
-    #stats .section, #stats .section:nth-of-type(3), #stats .section:nth-last-of-type(2) {
+    .content .section, .content .section:nth-of-type(3), .content .section:nth-last-of-type(2) {
         margin: 0;
         border-radius: 0;
     }
@@ -705,6 +671,9 @@ a {
     .card-container {
         padding: 0.750em;
     }
+#instafeed > a:nth-last-child(2), #instafeed > a:last-child {
+        display: none;
+    }
 }
 
 @media screen and (max-width: 22em) {
@@ -713,7 +682,6 @@ a {
     }*/
     #header .logo {
         font-size: 0.875em;
-        padding: 1.108em 1em;
         margin-right: 0.5em;
     }
     #map-controls .custom-select {
