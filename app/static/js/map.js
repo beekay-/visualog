@@ -31,13 +31,15 @@ function initMap() {
         map: map
     });
 
-    // Show data on map
+    // Show data on map and handle interactivity
     getDataForMap();
     handleDataInteractivity();
 
     // City Selector
     var cityName = document.getElementById('city');
     cityName.onchange = function() {
+        // Reset to showing all activities
+        activitySelector.selectedIndex = 0;
         if (cityName.value === 'banff') {
             map.setZoom(11);
             map.panTo(banff);
@@ -76,6 +78,7 @@ function initMap() {
         });
     });
 
+    // If user has switched to light theme, keep it
     lightTheme = sessionStorage.getItem('light-theme');
     if (lightTheme) {
         addLightTheme();
@@ -123,7 +126,7 @@ function initMap() {
         end = new Date().getTime();
         longpress = (end - start < 500) ? false : true;
     });
-
+    // Apply styles based on the activity chosen
     activitySelector.onchange = function() {
         dataLayer.setStyle(dataLayerStyle);
     };
@@ -149,10 +152,10 @@ function getBoundingBox() {
  * based on the current bounding box.
  **/
 function getDataForMap() {
-    // if (navigator.userAgent.indexOf('iPhone') != -1 || navigator.userAgent.indexOf('Android') != -1) {}
     google.maps.event.addListener(map, 'idle', function() {
         boundingBox = getBoundingBox();
         if (activitySelector.value === 'all') {
+            // Only load data between these zoom levels
             if (map.getZoom() >= 3 && map.getZoom() <= 11) {
                 $.ajax({
                     url: '/getData',
@@ -377,6 +380,7 @@ var dataLayerStyle = function(feature) {
                 visible: false
             });
         }
+    // Driving
     } else if (activitySelector.value === 'driving') {
         if (movementType === 'car' || movementType === 'transport') {
             return ({
@@ -391,6 +395,7 @@ var dataLayerStyle = function(feature) {
                 visible: false
             });
         }
+    // Walking, cycling, and running
     } else if (activitySelector.value === 'walking') {
         if (movementType === 'walking' || movementType === 'cycling' || movementType === 'running') {
             return ({
@@ -405,6 +410,7 @@ var dataLayerStyle = function(feature) {
                 visible: false
             });
         }
+    // Transit
     } else if (activitySelector.value === 'transit') {
         if (movementType === 'train' || movementType === 'bus' || movementType === 'underground') {
             return ({
@@ -419,6 +425,7 @@ var dataLayerStyle = function(feature) {
                 visible: false
             });
         }
+    // Airplane
     } else if (activitySelector.value === 'airplane') {
         if (movementType === 'airplane') {
             return ({
@@ -443,11 +450,13 @@ var dataLayerStyle = function(feature) {
 function handleDataInteractivity() {
     // When data on map is clicked...
     dataLayer.addListener('click', function(event) {
+        // Get place name, category, and coordinates
         placeName = event.feature.getProperty('name');
         placeCategory = event.feature.getProperty('category');
         var placeLat = event.feature.getGeometry().get().lat();
         var placeLng = event.feature.getGeometry().get().lng();
         var coordinates = new google.maps.LatLng(placeLat, placeLng);
+        // Get total number of visits for selected place
         $.ajax({
             url: '/getTotalVisits?p=' + placeName,
             type: 'GET',
