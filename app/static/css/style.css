@@ -493,6 +493,7 @@ a {
 .content .section h1 {
     font-size: 0.875em;
     padding: 1em;
+    text-align: center;
 }
 
 .content .section:nth-of-type(3), .content.section:nth-last-of-type(2) {
@@ -558,11 +559,11 @@ a {
     background: #F50057;
 }
 
-.walking {
+.walking, .cycling, .running {
     background: #2979FF;
 }
 
-.train {
+.train, .bus, .tram {
     background: #00E676;
 }
 
@@ -671,8 +672,11 @@ a {
     .card-container {
         padding: 0.750em;
     }
-#instafeed > a:nth-last-child(2), #instafeed > a:last-child {
+    #instafeed > a:nth-last-child(2), #instafeed > a:last-child {
         display: none;
+    }
+    .content .section h1 {
+        padding: 1em 2em;
     }
 }
 

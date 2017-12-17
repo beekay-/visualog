@@ -5,7 +5,7 @@
     </div>
     <div class="content flexbox">
         <div class="section">
-            <h1>Top means of transportation (by duration)</h1>
+            <h1>From the 9 cities visited, here’s <strong>how</strong> I spent my time traveling.</h1>
         </div>
         <div class="card-container flexbox">
         {% for x in allDuration %}
@@ -23,11 +23,21 @@
                     <h2>Traveled by train for {{ (x['total']/3600)|round|int }} hours, with an average time of {{ (x['avg']/60)|round|int }} minutes.</h2>
                 {% elif activity == 'airplane' %}
                     <h2>Flew {{ (x['total']/3600)|round|int }} hours, with an average time of {{ (x['avg']/3600)|round|int }} hours.</h2>
+                {% elif activity == 'bus' %}
+                    <h2>Traveled by bus for {{ (x['total']/3600)|round|int }} hours, with an average time of {{ (x['avg']/60)|round|int }} minutes.</h2>
+                {% elif activity == 'bus' %}
+                    <h2>Traveled by bus for {{ (x['total']/3600)|round|int }} hours, with an average time of {{ (x['avg']/60)|round|int }} minutes.</h2>
+                {% elif activity == 'running' %}
+                    <h2>Ran outdoors for {{ (x['total']/3600)|round|int }} hours, with an average time of {{ (x['avg']/60)|round|int }} minutes.</h2>
+                {% elif activity == 'cycling' %}
+                    <h2>Cycled outdoors for {{ (x['total']/3600)|round|int }} hour, with an average time of {{ (x['avg']/60)|round|int }} minutes.</h2>
+                {% elif activity == 'tram' %}
+                    <h2>Traveled by tram for {{ (x['total']/3600)|round|int }} hour, with an average time of {{ (x['avg']/60)|round|int }} minutes.</h2>
                 {% endif %}
             </div>
         {% endfor %}
         </div>
-        <div class="section">
+        <!-- <div class="section">
             <h1>Top means of transportation (by distance)</h1>
         </div>
         <div class="card-container flexbox">
@@ -49,9 +59,9 @@
                 {% endif %}
             </div>
         {% endfor %}
-        </div>
+        </div> -->
         <div class="section">
-            <h1>Top visited places</h1>
+            <h1>From the {{ totalPlaces }} places visited, here’s <strong>where</strong> I spent most of my time.</h1>
         </div>
         <div class="card-container flexbox">
         {% for x in allCategories %}

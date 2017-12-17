@@ -41,12 +41,13 @@ def stats():
     placesCollection = visualog["places"]
     movementCollection = visualog["movement"]
     aggregateCategories = [ { "$group": { "_id": { "category": "$properties.category" }, "total": { "$sum":1 } }}, { "$group": { "_id": "$_id.category", "total": { "$sum": "$total" } }}, { "$sort": { "total":-1 }}, { "$limit": 19 } ]
-    aggregateDuration = [ { "$group": { "_id": "$properties.activity", "total": { "$sum": "$properties.duration" }, "avg": { "$avg": "$properties.duration" } } }, { "$sort": { "total":-1 } }, { "$limit": 4 } ]
-    aggregateDistance = [ { "$group": { "_id": "$properties.activity", "total": { "$sum": "$properties.distance" }, "avg": { "$avg": "$properties.distance" } } }, { "$sort": { "total":-1 } }, { "$limit": 4 } ]
+    aggregateDuration = [ { "$group": { "_id": "$properties.activity", "total": { "$sum": "$properties.duration" }, "avg": { "$avg": "$properties.duration" } } }, { "$sort": { "total":-1 } }, { "$limit": 8 } ]
+    aggregateDistance = [ { "$group": { "_id": "$properties.activity", "total": { "$sum": "$properties.distance" }, "avg": { "$avg": "$properties.distance" } } }, { "$sort": { "total":-1 } }, { "$limit": 8 } ]
     allCategories = placesCollection.aggregate(aggregateCategories)
     allDuration = movementCollection.aggregate(aggregateDuration)
-    allDistance = movementCollection.aggregate(aggregateDistance)
-    return render_template("stats.html", allCategories=allCategories, allDuration=allDuration, allDistance=allDistance)
+    # allDistance = movementCollection.aggregate(aggregateDistance)
+    totalPlaces = len(placesCollection.distinct('properties.place'))
+    return render_template("stats.html", allCategories=allCategories, allDuration=allDuration, totalPlaces=totalPlaces)
 
 @app.route('/getTotalVisits', methods=['GET'])
 def getTotalVisits():
@@ -55,5 +56,5 @@ def getTotalVisits():
     # aggregatePlaces = [ { "$group": { "_id": { "category": "$properties.category" }, "total": { "$sum":1 } }}, { "$group": { "_id": "$_id.category", "total": { "$sum": "$total" } }}, { "$sort": { "total":-1 }} ]
     # cursor = placesCollection.aggregate(aggregatePlaces)
     # allPlaces = list(cursor)
-    placeCount = placesCollection.find({ "properties.place.name": place }).count()
+    placeCount = placesCollection.find({"properties.place.name": place }).count()
     return jsonify(total=placeCount)
