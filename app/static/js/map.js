@@ -245,7 +245,7 @@ var dataLayerStyle = function(feature) {
             return ({
                 icon: '/static/images/markers/amber.svg',
                 clickable: true,
-                opacity: 0.3,
+                opacity: 0.5,
                 optimized: true,
                 zIndex: 1
             });

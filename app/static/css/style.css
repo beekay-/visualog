@@ -491,7 +491,7 @@ a {
 }
 
 .content .section h1 {
-    font-size: 0.875em;
+    font-size: 0.938em;
     padding: 1em;
     text-align: center;
 }
@@ -571,19 +571,19 @@ a {
     background: #FFEA00;
 }
 
-.coffee, .bakery, .juice, .restaurant, .cream {
+.coffee, .bakery, .juice, .restaurant, .cream, .pizza, .pub {
     background: #00E5FF;
 }
 
-.mall, .supermarket {
+.mall, .supermarket, .pharmacy, .store {
     background: #F50057;
 }
 
-.office, .home, .residence, .coworking, .university {
+.office, .coworking, .university, .downtown {
     background: #3D5AFE;
 }
 
-.park, .bridge {
+.park, .bridge, .outdoor, .beach, .tower, .tourist, .gym, .leisure {
     background: #00E676;
 }
 
@@ -591,8 +591,16 @@ a {
     background: #FFC400;
 }
 
-.wash, .hotel, .pharmacy, .movie {
+.wash, .movie, .event, .plaza, .museum, .arcade, .bowling, .arena, .aquarium, .festival, .art.centre, .cultural {
     background: #00B0FF;
+}
+
+.spa, .hotel, .church, .post, .bank, .convention {
+    background: #795548;
+}
+
+.dealership, .registry, .gas, .oil {
+    background: #FFEA00;
 }
 
 /* ANIMATION */
@@ -669,6 +677,9 @@ a {
     .card {
         width: 100%;
     }
+    .card:hover {
+        background: rgba(0, 0, 0, .25);
+    }
     .card-container {
         padding: 0.750em;
     }
@@ -676,7 +687,7 @@ a {
         display: none;
     }
     .content .section h1 {
-        padding: 1em 2em;
+        text-align: left;
     }
 }
 
