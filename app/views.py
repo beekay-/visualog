@@ -42,7 +42,7 @@ def stats():
     movementCollection = visualog["movement"]
     aggregateCategories = [ { "$group": { "_id": { "category": "$properties.category" }, "total": { "$sum":1 } }}, { "$group": { "_id": "$_id.category", "total": { "$sum": "$total" } }}, { "$sort": { "total":-1 }}, { "$limit": 19 } ]
     aggregateDuration = [ { "$group": { "_id": "$properties.activity", "total": { "$sum": "$properties.duration" }, "avg": { "$avg": "$properties.duration" } } }, { "$sort": { "total":-1 } }, { "$limit": 8 } ]
-    aggregateDistance = [ { "$group": { "_id": "$properties.activity", "total": { "$sum": "$properties.distance" }, "avg": { "$avg": "$properties.distance" } } }, { "$sort": { "total":-1 } }, { "$limit": 8 } ]
+    # aggregateDistance = [ { "$group": { "_id": "$properties.activity", "total": { "$sum": "$properties.distance" }, "avg": { "$avg": "$properties.distance" } } }, { "$sort": { "total":-1 } }, { "$limit": 8 } ]
     allCategories = placesCollection.aggregate(aggregateCategories)
     allDuration = movementCollection.aggregate(aggregateDuration)
     # allDistance = movementCollection.aggregate(aggregateDistance)

@@ -5,7 +5,7 @@
     </div>
     <div class="content flexbox">
         <div class="section">
-            <h1>From the 9 cities visited, here’s <strong>how</strong> I spent my time traveling.</h1>
+            <h1>From 9 cities visited, here’s <strong>how</strong> I spent my time traveling.</h1>
         </div>
         <div class="card-container flexbox">
         {% for x in allDuration %}
@@ -61,7 +61,7 @@
         {% endfor %}
         </div> -->
         <div class="section">
-            <h1>From the {{ totalPlaces }} places visited, here’s <strong>where</strong> I spent most of my time.</h1>
+            <h1>From {{ totalPlaces }} places visited, here’s <strong>where</strong> I spent most of my time.</h1>
         </div>
         <div class="card-container flexbox">
         {% for x in allCategories %}
@@ -109,6 +109,15 @@
         {% endfor %}
         </div>
     </div>
+<script>
+var a = document.getElementsByTagName("a");
+for (var i = 0; i < a.length; i++) {
+    a[i].onclick = function() {
+        window.location = this.getAttribute("href");
+        return false
+    }
+}
+</script>
 <script src="/static/js/vendor/jquery.js"></script>
 <script>
 $(document).ready(function(){
